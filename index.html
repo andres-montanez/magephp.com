@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <title>Magallanes v3 - Documentation</title>
+
+    <!-- Styles -->
+    <link href="assets/css/theDocs.all.min.css" rel="stylesheet">
+    <link href="assets/css/theDocs.css" rel="stylesheet">
+    <link href="assets/css/skin-dark.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Raleway:100,300,400,500%7CLato:300,400' rel='stylesheet' type='text/css'>
+
+    <!-- Favicons -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="icons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="icons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="icons/manifest.json">
+    <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="theme-color" content="#ffffff">
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-21854256-2', 'magephp.com');
+        ga('send', 'pageview');
+    </script>
+</head>
+
+<body data-spy="scroll" data-target=".sidebar" data-offset="200">
+    <!-- Sidebar -->
+    <aside class="sidebar sidebar-boxed sidebar-dark">
+        <a class="sidebar-brand" href=""><img src="assets/img/logo-sidebar.png" width="200" alt="logo"></a>
+
+        <ul class="nav sidenav dropable">
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#installation">Installation</a></li>
+            <li>
+                <a href="#configuration">Configuration</a>
+                <ul>
+                    <li><a href="#environments">Environments</a></li>
+                    <li><a href="#ssh">SSH</a></li>
+                    <li><a href="#tar">Tar</a></li>
+                    <li><a href="#rsync">Rsync</a></li>
+                    <li><a href="#logging">Logging</a></li>
+                    <li><a href="#configReleases">Releases</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#workflow">Workflow</a>
+                <ul>
+                    <li><a href="#workflow-overview">Overview</a></li>
+                    <li><a href="#stages">Stages</a></li>
+                    <li><a href="#strategies">Strategies</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#commands">Commands</a>
+                <ul>
+                    <li><a href="#cmdVersion">Version</a></li>
+                    <li><a href="#cmdConfig">Config</a></li>
+                    <li><a href="#cmdDeploy">Deploy</a></li>
+                    <li><a href="#cmdReleases">Releases</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#tasks">Built In Tasks</a>
+                <ul>
+                    <li><a href="#taskDeploy">Deploy</a></li>
+                    <li><a href="#taskGit">Git</a></li>
+                    <li><a href="#taskComposer">Composer</a></li>
+                    <li><a href="#taskSymfony">Symfony</a></li>
+                    <li><a href="#taskFS">File System</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#cookbook">Cookbook</a>
+                <ul>
+                    <li><a href="#custom-tasks">Custom Tasks</a></li>
+                    <li><a href="#custom-config">Custom Configuration</a></li>
+                </ul>
+            </li>
+            <li><a href="#changelog">Changelog</a></li>
+            <li><a href="#thanks">Thanks</a></li>
+        </ul>
+
+        <div class="social-links">
+            <a href="https://github.com/andres-montanez/Magallanes" target="_blank"><i class="fa fa-github"></i></a>
+            <a href="https://www.twitter.com/magephp" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+    </aside>
+    <!-- END Sidebar -->
+
+    <header class="site-header navbar-transparent">
+        <!-- Top navbar & branding -->
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+
+                <!-- Toggle buttons and brand -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="true" aria-controls="navbar">
+                        <span class="glyphicon glyphicon-option-vertical"></span>
+                    </button>
+
+                    <button type="button" class="navbar-toggle for-sidebar" data-toggle="offcanvas">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+                <!-- END Toggle buttons and brand -->
+
+                <!-- Top navbar -->
+                <div id="navbar" class="navbar-collapse collapse" aria-expanded="true" role="banner">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="https://insight.sensiolabs.com/projects/ed0de53a-a12e-459b-9464-34def5907b56" target="_blank">SensioLabs Insight</a></li>
+                        <li><a href="https://travis-ci.org/andres-montanez/Magallanes" target="_blank">Travis CI</a></li>
+                        <li><a href="https://coveralls.io/github/andres-montanez/Magallanes?branch=nostromo" target="_blank">Coveralls</a></li>
+                        <li><a href="https://github.com/andres-montanez/Magallanes" target="_blank">GitHub</a></li>
+                    </ul>
+                </div>
+                <!-- END Top navbar -->
+            </div>
+        </nav>
+        <!-- END Top navbar & branding -->
+
+        <!-- Banner -->
+        <div class="magallanes-banner banner auto-size" style="background-color: #202020;;">
+            <div class="container-fluid text-white">
+                <h1><strong>Magallanes</strong> <small>Nostromo Edition</small></h1>
+                <h5>The PHP Deployment Tool</h5>
+            </div>
+        </div>
+        <!-- END Banner -->
+
+    </header>
+
+    <main class="container-fluid">
+        <!-- Main content -->
+        <article class="main-content" role="main">
+            <p class="lead">Magallanes is a deployment tool made with PHP and for PHP applications, it's quite simple to use and manage.</p>
+            <p class="lead">Just like typing <kbd>bin/mage deploy production</kbd></p>
+
+            <!-- OVERVIEW -->
+            <section>
+                <h2 id="overview">Overview</h2>
+                <p>Magallanes is a deployment tool for PHP applications built with PHP itself, it's quite simple to use, manage and extend.
+                    It will get your application to a safe harbor. You can instruct Magallanes to deploy your code to all the servers you want,
+                    and run tasks for that freshly deployed code. You can also instruct Magallanes to run tasks before the deployment starts (e.g: a vendors install)
+                    and after the deployment is done (e.g: clear some caches).
+                </p>
+
+                <p>The mission with Magallanes is very simple, to move code from point A to point B (or several Bs) and group common tasks associated with the deployment workflow.
+                    Some of this tasks are quite common, like installing vendors and warming a cache, so there are some Built In Tasks for common usage. But you are encouraged to build your own... and share them!
+                </p>
+
+                <p>As it has always been, Magallanes is open to Pull Requests, just make sure you write tests for any new feature and all the new code has the appropriate coverage.</p>
+
+                <p>The current version of Magallanes (v3) has been completely rewritten with Symfony3 Components, in particular Console, Process, FileSystem, YAML, and Finder.
+                    Also the logging is delegated to Monolog, and of course all the power of Composer to glue all together.</p>
+            </section>
+
+
+            <!-- INSTALLATION -->
+            <section>
+                <h2 id="installation">Installation</h2>
+                <p>Installing Magallanes is quite simple, just add the dependency to your Composer configuration, update and you are done!</p>
+
+                <pre class="line-numbers">
+<code class="language-json">"require": {
+    "andres-montanez/magallanes": "^3.0"
+}</code></pre>
+
+                <p>Also you can execute: <kbd>composer require andres-montanez/magallanes:^3.0</kbd></p>
+
+                <p>After installing you can invoke Magallanes with the <kbd>vendor/bin/mage</kbd> executable,
+                    or you can configure Composer to link all vendors binaries into a more friendly directory,
+                    for example under <code>bin</code> adding this configuration to your <code>composer.json</code>
+                </p>
+
+                <pre class="line-numbers">
+<code class="language-json">"config": {
+    "bin-dir": "bin"
+}</code></pre>
+
+                <p>You will have to purge your vendors and install them again. Or you could just simply symlink to the binary <kbd>ln -s vendor/bin/mage bin/mage</kbd></p>
+
+                <p>For the rest of the documentation let's assume your Magallanes executable is <kbd>bin/mage</kbd></p>
+
+                <p>The most simple test is to check the installed version</p>
+
+                <p><kbd>bin/mage version</kbd></p>
+                <p><pre><samp>Magallanes v3.0.0 [Nostromo]</samp></pre></p>
+            </section>
+
+
+            <!-- CONFIGURATION -->
+            <section>
+                <h2 id="configuration">Configuration</h2>
+                <p>All configuration is handled by one single YAML file in the root of the project: <code>.mage.yml</code>
+                    This file contains environment definitions, options and tasks configurations.
+                </p>
+
+                <p>The following example is a very basic configuration with just one environment:</p>
+
+                <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    environments:
+        production:
+            user: app
+            branch: master
+            host_path: /var/www/myapp
+            releases: 4
+            exclude:
+                - ./var/cache/*
+                - ./var/log/*
+                - ./web/app_dev.php
+            hosts:
+                - webserver1
+                - webserver2
+                - webserver3
+            pre-deploy:
+                - git/update
+                - composer/install
+                - composer/dump-autoload
+            on-deploy:
+                - symfony/cache-warmup: { env: 'dev' }
+                - symfony/assets-install: { env: 'dev' }
+                - symfony/assetic-dump: { env: 'dev' }
+            on-release:
+            post-release:
+            post-deploy:
+</code></pre>
+
+                <p>The first element of the configuration must be the <code>magephp</code> node.
+                    Then the <code>environments</code> section will hold all the configuration for your environments.
+                </p>
+
+                <p>An environment is a set of configurations, there you will define where you want to deploy the code to,
+                    with which user, to which folder, to which hosts, of you need to checkout a specific branch (if using git),
+                    if you want to keep a history of the releases (deployed code) just in case you may need to rollback,
+                    also you have the chance to exclude some files if needed. And then a set of tasks to execute in specific order and stages of the deployment.
+                </p>
+
+                <p>Also there are many configuration options which can be overwritten for your convenience.</p>
+
+                <h3 id="environments">Environments</h3>
+                <p>The key of your environment will be it's name, so in the example above it is <code>production</code>,
+                    therefore you will deploy with <kbd>bin/mage deploy production</kbd>
+                </p>
+
+                <p>Let's take a look at the configuration options</p>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th width="130">Option</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>user</code></td>
+                                <td>
+                                    <p>It's the username to use on SSH and Rsync commands. Use a user who has enough privileges to write on the host.</p>
+                                    <p>If undefined then the current user (read with <code>posix_getpwuid(posix_geteuid())</code>) will be used.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>branch</code></td>
+                                <td>
+                                    <p>If you are using Git, and this option is defined, then Magallanes will try to checkout this branch for the deployment.
+                                        It's useful if you have a development branch and environment.
+                                    </p>
+                                    <p>If left undefined no git task will be executed.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>host_path</code></td>
+                                <td>
+                                    <p>It's the path on the remote hosts to where the code is going to be deployed. This parameter is shared with all hosts.</p>
+                                    <p>If left undefined a <code>DeploymentException</code> will be thrown.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>ssh</code></td>
+                                <td>Configuration overwrite for SSH commands. See following section <a href="#ssh">Configuration &#187; SSH.</a></td>
+                            </tr>
+                            <tr>
+                                <td><code>sudo</code></td>
+                                <td>If set to <code>true</code> all remote commands will be prefixed with <kbd>sudo</kbd>. Default is <code>false</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>tar_create</code></td>
+                                <td>
+                                    <p>Configuration overwrite for flags on Tar creation. See following section <a href="#tar">Configuration &#187; Tar.</a></p>
+                                    <p>If left undefined a <code>cfzp</code> will be used.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>tar_extract</code></td>
+                                <td>
+                                    <p>Configuration overwrite for flags on Tar extraction. See following section <a href="#tar">Configuration &#187; Tar.</a></p>
+                                    <p>If left undefined a <code>xfzop</code> will be used.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>rsync</code></td>
+                                <td>
+                                    <p>Configuration overwrite for Rsync flags. See following section <a href="#rsync">Configuration &#187; Rsync.</a></p>
+                                    <p>If left undefined a <code>-avz</code> will be used.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>releases</code></td>
+                                <td>
+                                    <p>If you want to enable Releases and in consequence the option to perform Rollback, then define this parameter
+                                        indicating how many releases you want to leave on the hosts. The greater the number the more back in time you will be able to rollback,
+                                        but it will also consume more storage.
+                                    </p>
+                                    <p>By default releases are disabled.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>exclude</code></td>
+                                <td>A list of files or directories to exclude when doing Rsync or when creating the Tar for the deployment.
+                                    Be careful with the wildcard and for better control always start with <code>./</code> so you are sure it's from the root onwards.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>hosts</code></td>
+                                <td>
+                                    <p>The list of hosts to which the code is going to be deployed. It can be an empty list, if so all deployment tasks will be skipped.</p>
+                                    <p>Make sure you can connect passwordless to all of them using SSH keys.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><code>pre-deploy</code></p>
+                                    <p><code>on-deploy</code></p>
+                                    <p><code>on-release</code></p>
+                                    <p><code>post-release</code></p>
+                                    <p><code>post-deploy</code></p>
+                                </td>
+                                <td>The list tasks to be executed on each stage. The list can be empty, Magallanes still will add some tasks by itself in order to run the deployment process.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>You can have as many environments as you want. If using several branches make sure to always have the same <code>.mage.yml</code> file across then all,
+                    otherwise the in-memory configuration will not be updated.</p>
+
+                <h3 id="ssh">SSH</h3>
+                <p>Many tasks rely on SSH connection, like <kbd>scp</kbd>, <kbd>rsync</kbd> and of course executing
+                    remote commands with <kbd>ssh</kbd>. You can configure the following options for each environment.
+                    Each options is shown with it's default value.
+                </p>
+
+                <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    environments:
+        production:
+            ssh:
+                port: 22
+                flags: -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no</code></pre>
+
+                <p>You can use the flags option to tweak your SSH connection as best fits your needs.
+                    The best way to make your connection is by using SSH Keys across your servers. These flags are also inherited by the Rsync and Tar tasks.
+                </p>
+
+                <div class="callout callout-danger" role="alert">
+                    <h4>Warning</h4>
+                    <p>Be careful if you overwrite these flags, otherwise you may experience problems when connecting to the hosts.</p>
+                </div>
+
+                <h3 id="tar">Tar</h3>
+                <p>The Tar tasks uses two set of flags, one for creation of the file, and another for it's extraction. By default the creation flags are <code>cfzop</code> and the extraction flags are <code>zfzop</code>, you can overwrite them if you need to in the environment section.</p>
+
+                <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    environments:
+        production:
+            tar_create: cfh
+            tar_extract: xf</code></pre>
+
+                <div class="callout callout-danger" role="alert">
+                    <h4>Warning</h4>
+                    <p>Be careful if you overwrite these flags, the creation flags should always have at least <code>cf</code> which stands for Create and File.
+                        And the extraction flags should always have at least <code>xf</code> which stands for eXtract File.</p>
+                </div>
+
+                <h3 id="rsync">Rsync</h3>
+                <p>The Rsync task uses by default the <code>-avz</code> flags, you can overwrite them if you need to in the environment section.</p>
+
+                <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    environments:
+        production:
+            rsync: -avz</code></pre>
+
+                <h3 id="logging">Logging</h3>
+                <p>Logging is optional but encouraged nonetheless, you can enable them by defining this general option:</p>
+
+                <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    log_dir: /path/to/my/logs
+</code></pre>
+
+                <p>The <code>log_dir</code> option is a directory where all the logs will be generated,
+                    at the beginning of the deployment the current log file will be informed.
+                </p>
+
+                <h3 id="configReleases">Releases</h3>
+                <p>When using Releases you have to take into account that Magallanes will create a <code>releases</code> directory
+                    in the <code>host_path</code> directory, and a symbolic link <code>current</code> which will point to a release inside <code>releases</code>.</p>
+                <p>The code will be deployed to a directory named after a Release Id, which is just a convenient timestamp.</p>
+                <p>This is a directory tree example:</p>
+
+                <div class="dir-explain">
+                    <code class="url">/var/www/app/</code>
+                    <ul class="files">
+                        <li><code style="color: green;">current -&gt; releases/20170102121530</code></li>
+                        <li>
+                            <code>releases/</code>
+                            <ul class="files">
+                                <li><code>20170101061530/</code></li>
+                                <li><code>20170101081530/</code></li>
+                                <li><code>20170102061530/</code></li>
+                                <li><code>20170102121530/</code></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>File/Folder</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>/var/www/app/</code></td>
+                                <td>The <code>host_path</code> directory, defined in the configuration</td>
+                            </tr>
+                            <tr>
+                                <td><code>releases/</code></td>
+                                <td>Contains all the deployed releases</td>
+                            </tr>
+                            <tr>
+                                <td><code>releases/20170102121530/</code></td>
+                                <td>A deployed release</td>
+                            </tr>
+                            <tr>
+                                <td><code style="color: green;">current</code></td>
+                                <td>A symbolic link pointing to the live release</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>Take into account this when configuring Virtual Hosts, cronjob paths, etc.</p>
+
+                <div class="callout callout-warning" role="alert">
+                    <h4>Regarding Symlinks, Part I</h4>
+                    <p>If you are going to use relative symlinks inside your release directory, remember that the real path is <code>/var/www/app/releases/20170102121530/</code> and not <code>/var/www/app/current</code></p>
+                    <p>So if you want to go "one directory down", for example to <code>/var/www/app/shared</code>, the symlink will be <code>../../shared</code></p>
+                </div>
+            </section>
+
+            <!-- WORKFLOW -->
+            <section>
+                <h2 id="workflow">Workflow</h2>
+
+                <h3 id="workflow-overview">Overview</h3>
+                <p>Nice flowcharts coming soon ¯\_(ツ)_/¯</p>
+
+
+                <h3 id="stages">Stages</h3>
+
+                <p>Magallanes works in Stages. Each stage is a step in the deployment process. Each stage has a context of execution,
+                    and within that context, some tasks will be executed.</p>
+                <p>The Local context is when by default tasks will operate on the directory where you are launching the deployment.
+                    On the other end, Remote context is when by default tasks will be executed on the current working remote host,
+                    to which the code is being deployed to.</p>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th width="150">Name</th>
+                                <th width="130">Code</th>
+                                <th width="90">Context</th>
+                                <th>Description</th>
+                                <th>Examples</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Pre Deploy</td>
+                                <td><code>pre-deploy</code></td>
+                                <td>Local</td>
+                                <td>This is the first stage in the deployment. Tasks in this stage will be the firsts to be executed.</td>
+                                <td>Pulling from repository, switching branches, installing vendors</td>
+                            </tr>
+                            <tr>
+                                <td>On Deploy</td>
+                                <td><code>on-deploy</code></td>
+                                <td>Remote</td>
+                                <td>This is the second stage. Tasks in this stage will be the firsts to be executed on each host. This stage will be triggered for each defined deployment host.</td>
+                                <td>Warming cache, installing assets, switching configuration</td>
+                            </tr>
+                            <tr>
+                                <td>On Release</td>
+                                <td><code>on-release</code></td>
+                                <td>Remote</td>
+                                <td>This stage is optional, and will be executed only if Releases are enabled. Tasks in this stage will be executed on each host at the moment of swapping the current release.
+                                    This stage will be triggered for each defined deployment host.</td>
+                                <td>Puring APC Cache</td>
+                            </tr>
+                            <tr>
+                                <td>Post Release</td>
+                                <td><code>post-release</code></td>
+                                <td>Remote</td>
+                                <td>This stage is optional, and will be executed only if Releases are enabled, and after all releases where swapped successfully on each host.
+                                    Tasks in this stage will be executed on each host after the swapping the current release.
+                                    This stage will be triggered for each defined deployment host.</td>
+                                <td>Removing locks, purging cache</td>
+                            </tr>
+                            <tr>
+                                <td>Post Deploy</td>
+                                <td><code>post-deploy</code></td>
+                                <td>Local</td>
+                                <td>This is the last stage in the deployment. Tasks in this stage will be the lasts to be executed.</td>
+                                <td>Purging cache</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="strategies">Strategies</h3>
+                <p>Magallanes uses two strategies for making the deployments. This is inferred from the configuration and currently can not be configured.
+                    If you have releases enabled then the Releases Strategy will be used, which copy the code using a <kbd>tar</kbd> file and <kbd>scp</kbd>.
+                </p>
+                <p>On the other hand if you don't use Releases then Magallanes will use the Rsync Strategy which copy the code using <kbd>rsync</kbd> command.</p>
+                <p>Also there are a few restrictions with the Rsync Strategy, the tasks defined on the <code>on-release</code> and <code>post-release</code> stages
+                    will <u>not be executed</u> because releases are not enabled so it doesnt' make sense to execute tasks associated with releases stages.</p>
+
+            </section>
+
+            <section>
+                <h2 id="commands">Commands</h2>
+
+                <h3 id="cmdVersion">Version</h3>
+                <p>Quite self explanatory, this command will tell you which version of Magallanes is being used.</p>
+                <p><kbd>bin/mage version</kbd></p>
+                <p><pre><samp>Magallanes v3.0.0 [Nostromo]</samp></pre></p>
+
+                <h3 id="cmdConfig">Config</h3>
+                <p>The Config is useful for debugging, it offers two subcommands: <kbd>dump</kbd> and <kbd>environments</kbd></p>
+
+                <h4>Dump</h4>
+                <p>This will dump your <code>.mage.yml</code> file as interpreted by the Yaml component, in a PHP array export.
+                    This is the interpreted output of the sample configuration.</p>
+                <p><kbd>bin/mage config:dump</kbd></p>
+                <p><pre><samp>Starting Magallanes
+
+array (
+  'environments' =&gt;
+  array (
+    'production' =&gt;
+    array (
+      'user' =&gt; 'app',
+      'branch' =&gt; 'master',
+      'host_path' =&gt; '/var/www/myapp',
+      'releases' =&gt; 4,
+      'exclude' =&gt;
+      array (
+        0 =&gt; './var/cache/*',
+        1 =&gt; './var/log/*',
+        2 =&gt; './web/app_dev.php',
+      ),
+      'hosts' =&gt;
+      array (
+        0 =&gt; 'webserver1',
+        1 =&gt; 'webserver2',
+        2 =&gt; 'webserver3',
+      ),
+      'pre-deploy' =&gt;
+      array (
+        0 =&gt; 'git/update',
+        1 =&gt; 'composer/install',
+        2 =&gt; 'composer/dump-autoload',
+      ),
+      'on-deploy' =&gt;
+      array (
+        0 =&gt;
+        array (
+          'symfony/cache-warmup' =&gt;
+          array (
+            'env' =&gt; 'dev',
+          ),
+        ),
+        1 =&gt;
+        array (
+          'symfony/assets-install' =&gt;
+          array (
+            'env' =&gt; 'dev',
+          ),
+        ),
+        2 =&gt;
+        array (
+          'symfony/assetic-dump' =&gt;
+          array (
+            'env' =&gt; 'dev',
+          ),
+        ),
+      ),
+      'on-release' =&gt; NULL,
+      'post-release' =&gt; NULL,
+      'post-deploy' =&gt; NULL,
+    ),
+  ),
+)
+
+Finished Magallanes
+</samp></pre>
+                </p>
+
+                <br />
+
+                <h4>Environments</h4>
+                <p>This other option will list all the defined environments and some handy information: defined user, branch, and hosts list.
+                    This is the output for the sample configuration.</p>
+                <p><kbd>bin/mage config:environments</kbd></p>
+                <p><pre><samp>Starting Magallanes
+
++-------------+------+--------+------------+
+| Environment | User | Branch | Hosts      |
++-------------+------+--------+------------+
+| production  | app  | master | webserver1 |
+|             |      |        | webserver2 |
+|             |      |        | webserver3 |
++-------------+------+--------+------------+
+
+Finished Magallanes</samp></pre>
+                </p>
+
+                <div class="callout callout-info" role="alert">
+                    <h4>Pro Tip!</h4>
+                    <p>Magallanes Commands are in fact Symfony3 Console Commands, so you can shortcut them like this:</p>
+                    <p><kbd>bin/mage conf:env</kbd></p>
+                </div>
+
+                <h3 id="cmdDeploy">Deploy</h3>
+                <p>Well, this is the big one! The <kbd>deploy</kbd> command will start the deployment of your code. You just have to provide to which environment you want to deploy to:<p>
+                <p><kbd>bin/mage deploy production</kbd> and that's it! You have done it!!</p>
+                <p>Optionally you can set a branch with <kbd>--branch=test</kbd> which will override your configuration, if you don't have a branch configured it will be set to the one provided.</p>
+                <p>Here is a complete output based on the sample configuration form above</p>
+                <p><kbd>bin/mage deploy production --branch=test</kbd></p>
+                <p><pre><samp>Starting Magallanes
+
+    Environment: production
+    Release ID: 20170104042540
+    Strategy: Releases
+    Branch: test
+
+    Starting Pre Deploy tasks:
+        Running [Git] Change Branch (test) ... OK
+        Running [Git] Update ... OK
+        Running [Composer] Install ... OK
+        Running [Composer] Generate Autoload ... OK
+        Running [Deploy] Preparing Tar file ... OK
+    Finished 5/5 tasks for Pre Deploy.
+
+    Starting On Deploy tasks on host webserver1:
+        Running [Release] Preparing Release ... OK
+        Running [Deploy] Copying files with Tar ... OK
+        Running [Symfony] Cache Warmup ... OK
+        Running [Symfony] Assets Install ... OK
+        Running [Symfony] Assetic Dump ... OK
+    Finished 5/5 tasks for On Deploy.
+
+    Starting On Deploy tasks on host webserver2:
+        Running [Release] Preparing Release ... OK
+        Running [Deploy] Copying files with Tar ... OK
+        Running [Symfony] Cache Warmup ... OK
+        Running [Symfony] Assets Install ... OK
+        Running [Symfony] Assetic Dump ... OK
+    Finished 5/5 tasks for On Deploy.
+
+    Starting On Deploy tasks on host webserver3:
+        Running [Release] Preparing Release ... OK
+        Running [Deploy] Copying files with Tar ... OK
+        Running [Symfony] Cache Warmup ... OK
+        Running [Symfony] Assets Install ... OK
+        Running [Symfony] Assetic Dump ... OK
+    Finished 5/5 tasks for On Deploy.
+
+    Starting On Release tasks on host webserver1:
+        Running [Release] Creating Symlink ... OK
+    Finished 1/1 tasks for On Release.
+
+    Starting On Release tasks on host webserver2:
+        Running [Release] Creating Symlink ... OK
+    Finished 1/1 tasks for On Release.
+
+    Starting On Release tasks on host webserver3:
+        Running [Release] Creating Symlink ... OK
+    Finished 1/1 tasks for On Release.
+
+    Starting Post Release tasks on host webserver1:
+        Running [Release] Cleaning up old Releases ... OK
+    Finished 1/1 tasks for On Release.
+
+    Starting Post Release tasks on host webserver2:
+        Running [Release] Cleaning up old Releases ... OK
+    Finished 1/1 tasks for Post Release.
+
+    Starting Post Release tasks on host webserver3:
+        Running [Release] Cleaning up old Releases ... OK
+    Finished 1/1 tasks for Post Release.
+
+    Starting Post Deploy tasks:
+        Running [Deploy] Cleanup Tar file ... OK
+        Running [Git] Change Branch (master) ... OK
+    Finished 2/2 tasks for Post Deploy.
+
+Finished Magallanes</samp></pre>
+                </p>
+
+                <p>As you can see there are many tasks added by Magallanes. This configuration has Releases enabled so
+                    the deployment will be executed with a Tar file copied to all defined hosts. On the <code>Pre Deploy</code> stage the Tar file is created,
+                    then on each <code>On Deploy</code> iteration the file is copied, and finally the file is deleted on the <code>Post Deploy</code> stage.
+                </p>
+                <p>Also, because Releases are enabled, Magallanes needs to create the release directory, swap the current symlink, and then delete old releases.
+                    On the same fashion, the first task of the <code>On Deploy</code> stage is to create the directory, then the <code>On Release</code> stage the symlink is swapped,
+                and after all releases were completed successfully the delete process is triggered on the <code>Post Release</code> stage.
+                </p>
+                <p>A similar process is made for changing branches, but on the <code>Pre Deploy</code> and <code>Post Deploy</code> stages.
+                </p>
+
+                <h3 id="cmdReleases">Releases</h3>
+                <p>The Releases command is in charge of managing your deployed releases, it offers two subcommands: <kbd>list</kbd> and <kbd>rollback</kbd></p>
+
+                <h4>List</h4>
+                <p>This will list your releases on a given environment.
+                    This is the list output for the sample configuration.</p>
+                <p><kbd>bin/mage releases:list production</kbd></p>
+
+                <p><pre><samp>Starting Magallanes
+
+    Environment: production
+
+    Releases on host webserver1:
+        Release ID: 20170102121530 - Date: 2017-01-02 12:15:30 [2 hour(s) ago] [current]
+        Release ID: 20170102061530 - Date: 2017-01-02 06:15:30 [8 hour(s) ago]
+        Release ID: 20170101081530 - Date: 2017-01-01 08:15:30 [1 day(s) ago]
+        Release ID: 20170101061530 - Date: 2017-01-01 06:15:30 [1 day(s) ago]
+
+    Releases on host webserver2:
+        Release ID: 20170102121530 - Date: 2017-01-02 12:15:30 [2 hour(s) ago] [current]
+        Release ID: 20170102061530 - Date: 2017-01-02 06:15:30 [8 hour(s) ago]
+        Release ID: 20170101081530 - Date: 2017-01-01 08:15:30 [1 day(s) ago]
+        Release ID: 20170101061530 - Date: 2017-01-01 06:15:30 [1 day(s) ago]
+
+    Releases on host webserver3:
+        Release ID: 20170102121530 - Date: 2017-01-02 12:15:30 [2 hour(s) ago] [current]
+        Release ID: 20170102061530 - Date: 2017-01-02 06:15:30 [8 hour(s) ago]
+        Release ID: 20170101081530 - Date: 2017-01-01 08:15:30 [1 day(s) ago]
+        Release ID: 20170101061530 - Date: 2017-01-01 06:15:30 [1 day(s) ago]
+
+Finished Magallanes</samp></pre>
+                </p>
+                <p>The <code>[current]</code> label indicates that that's the release being used at the moment.</p>
+
+                <br />
+
+                <h4>Rollback</h4>
+                <p>Rollback is the other big command, it allows you to swap the current deployment to another release, already stored on your hosts.</p>
+                <p>The command besides needing the environment it also requires the Release Id to which you want to change the current deployment.
+                    It must exists on all your hosts. This is the rollback output for the sample configuration.</p>
+                <p><kbd>bin/mage releases:rollback production 20170101081530</kbd></p>
+
+                <p><pre><samp>Starting Magallanes
+
+    Environment: production
+    Rollback to Release ID: 20170101081530
+    Strategy: Releases
+
+    Starting Pre Deploy tasks:
+        Running [Git] Update ... SKIPPED
+        Running [Composer] Install ... SKIPPED
+        Running [Composer] Generate Autoload ... SKIPPED
+    Finished 3/3 tasks for Pre Deploy.
+
+    No tasks defined for On Deploy stage
+
+    Starting On Release tasks on host webserver1:
+        Running [Release] Creating Symlink ... OK
+    Finished 1/1 tasks for On Release.
+
+    Starting On Release tasks on host webserver2:
+        Running [Release] Creating Symlink ... OK
+    Finished 1/1 tasks for On Release.
+
+    Starting On Release tasks on host webserver3:
+        Running [Release] Creating Symlink ... OK
+    Finished 1/1 tasks for On Release.
+
+    No tasks defined for Post Release stage
+
+    No tasks defined for Post Deploy stage
+
+Finished Magallanes</samp></pre>
+                </p>
+
+                <p>As you can compare with the output from the deployment, many of the tasks are skipped because they only make sense when doing a deployment.</p>
+                <p>Also take notice that all stages are executed, but many will not have tasks.</p>
+            </section>
+
+            <section>
+                <h2 id="tasks">BuiltIn Tasks</h2>
+                <h3 id="taskDeploy">Deploy</h3>
+                <p>The Deployment Tasks are automatically used by Magallanes when preparing the tasks that needs to be executed for the deployment.</p>
+                <p>You can use this tasks to tweak the order of execution. For example, on a deployment without releases, Magallanes adds <code>deploy/rsync</code> as the first task of the On Deploy stage,
+                    but you may want to run a custom task before that, so you can add <code>deploy/rsync</code> as the second task in the list and Magallanes will respect the order you defined.</p>
+                <p>In most cases you will not need to manually use these tasks.</p>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th width="150">Name</th>
+                                <th width="150">Stage</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>deploy/release/prepare</code></td>
+                                <td>On Deploy</td>
+                                <td>When releases are enabled, this task will create the appropriate directory on each host.</td>
+                            </tr>
+                            <tr>
+                                <td><code>deploy/release</code></td>
+                                <td>On Release</td>
+                                <td>When releases are enabled, this task will create the symlink <code>current</code> to the appropriate directory on each host.</td>
+                            </tr>
+                            <tr>
+                                <td><code>deploy/release/cleanup</code></td>
+                                <td>Post Release</td>
+                                <td>When releases are enabled, this task will look up all the releases directories on all hosts and if it has passed the number of defined releases it will delete the oldest.</td>
+                            </tr>
+                            <tr>
+                                <td><code>deploy/rsync</code></td>
+                                <td>On Deploy</td>
+                                <td>When releases are not enabled the deployment will be copied with <kbd>rsync</kbd>, this task will sync the code to all hosts.</td>
+                            </tr>
+                            <tr>
+                                <td><code>deploy/tar/prepare</code></td>
+                                <td>Pre Deploy</td>
+                                <td>When releases are enabled, this task will create a zipped tarball file with <kbd>tar</kbd>.</td>
+                            </tr>
+                            <tr>
+                                <td><code>deploy/tar/copy</code></td>
+                                <td>On Deploy</td>
+                                <td>When releases are enabled, this task will copy with <kbd>scp</kbd> the tarball file created earlier to all defined hosts.</td>
+                            </tr>
+                            <tr>
+                                <td><code>deploy/tar/cleanup</code></td>
+                                <td>Post Deploy</td>
+                                <td>When releases are enabled, after the deployment is complete, this task will delete the tarball file created earlier.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="taskGit">GIT</h3>
+                <p>This task are for interacting with your GIT repository, it's most likely that you will use <code>git/update</code> at the beginning of your Pre Deploy tasks.
+                    Magallanes will automatically add the <code>git/change-branch</code> task if needed.</p>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th width="200">Name</th>
+                                <th width="150">Stage</th>
+                                <th>Parameters</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>git/update</code></td>
+                                <td>Pre Deploy</td>
+                                <td>-</td>
+                                <td>Use this task to update your branch on the Pre Deploy stage, it will <kbd>git pull</kbd> the code for you.</td>
+                            </tr>
+                            <tr>
+                                <td><code>git/change-branch</code></td>
+                                <td>
+                                    <p>Pre Deploy</p>
+                                    <p>Post Deploy</p>
+                                </td>
+                                <td><code>branch</code></td>
+                                <td>This task is automatically added by Magallanes at the beginning of the Pre Deploy stage if you have the option <code>branch</code> defined.
+                                    It will look if the current checked out branch and skip if it's the same as <code>branch</code> or change to it with <kbd>git checkout branch</kbd>.
+                                    If the switch was made, the task will remember the original branch and reverse it at the Post Deploy stage. This is handled automatically by Magallanes.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="taskComposer">Composer</h3>
+                <p>Composer has become an integral part of our PHP applications, so is handy to have some built in tasks for interacting with Composer.</p>
+                <p>By default it is assumed that Composer is installed globally so it will be invoked with <kbd>composer</kbd>, but if you have it in an
+                    specific path you can configure it at root level under the <code>composer</code> section with the <code>path</code> parameter.</p>
+
+                <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    composer:
+        path: /alternative/path-to/composer.phar
+</code></pre>
+
+                <p>The following tasks are available in Magallanes for using Composer.</p>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th width="260">Name</th>
+                                <th>Parameters</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>composer/install</code></td>
+                                <td>
+                                    <p><code>path</code> default <var>composer</var></p>
+                                    <p><code>flags</code> default <var>--optimize-autoloader</var></p>
+                                </td>
+                                <td>Will execute <kbd>composer install</kbd> plus the given flags.</td>
+                            </tr>
+                            <tr>
+                                <td><code>composer/dump-autoload</code></td>
+                                <td>
+                                    <p><code>path</code> default <var>composer</var></p>
+                                    <p><code>flags</code> default <var>--optimize</var></p>
+                                </td>
+                                <td>Will execute <kbd>composer dump-autoload</kbd> plus the given flags.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>The parameters can be specified at the task level, for instance if you want to change the default flags for the <code>composer/install</code> task, you could do the following.</p>
+
+                <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    environments:
+        production:
+            pre-deploy:
+                - composer/install: { flags: '--no-dev' }
+</code></pre>
+
+                <h3 id="taskSymfony">Symfony</h3>
+                <p>Magallaes has been rebuilt with Symfony3 Components, so I like the framework a lot! It seems only fair to have some built in tasks for common Symfony integration.</p>
+                <p>By default it is assumed that the Symfony Console is located in <kbd>bin/console</kbd>, following the Symfony3 directory structure, but if you have it in an
+                    specific path you can configure it at root level under the <code>symfony</code> section with the <code>console</code> parameter.</p>
+
+                <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    symfony:
+        console: app/api-console
+</code></pre>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th width="220">Name</th>
+                            <th width="270">Parameters</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>symfony/cache-clear</code></td>
+                                <td>
+                                    <p><code>console</code> default <var>bin/console</var></p>
+                                    <p><code>env</code> default <var>dev</var></p>
+                                    <p><code>flags</code> default empty</p>
+                                </td>
+                                <td>Will clear the appropriate environment's cache by executing <kbd>bin/console cache:clear --env=ENV</kbd> plus any given flags.</td>
+                            </tr>
+                            <tr>
+                                <td><code>symfony/cache-warmup</code></td>
+                                <td>
+                                    <p><code>console</code> default <var>bin/console</var></p>
+                                    <p><code>env</code> default <var>dev</var></p>
+                                    <p><code>flags</code> default empty</p>
+                                </td>
+                                <td>Will warm up the appropriate environment's cache by executing <kbd>bin/console cache:warmup --env=ENV</kbd> plus any given flags.</td>
+                            </tr>
+                            <tr>
+                                <td><code>symfony/assets-install</code></td>
+                                <td>
+                                    <p><code>console</code> default <var>bin/console</var></p>
+                                    <p><code>env</code> default <var>dev</var></p>
+                                    <p><code>target</code> default <var>web</var></p>
+                                    <p><code>flags</code> default <var>--symlink --relative</var></p>
+                                </td>
+                                <td>Will install the assets defined by the loaded bundles by executing <kbd>bin/console assets:install TARGET --env=ENV</kbd> plus the given flags.</td>
+                            </tr>
+                            <tr>
+                                <td><code>symfony/assetic-dump</code></td>
+                                <td>
+                                    <p><code>console</code> default <var>bin/console</var></p>
+                                    <p><code>env</code> default <var>dev</var></p>
+                                </td>
+                                <td>Will dump assetics by executing <kbd>bin/console assetic:dump --env=ENV</kbd> plus any given flags.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>Defining flags or environments at a global level is not useful, so you can define these parameters right along the task, just like the following example.</p>
+
+                <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    environments:
+        test:
+            on-deploy:
+                - symfony/cache-warmup: { env: 'test' }
+</code></pre>
+
+                <p>On the other hand, Symfony parameters can also exists at the Environment's level, so you could define an environment's <code>env</code> parameter for all you Symfony tasks and save a bit of configuration, just like this.</p>
+
+                <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    environments:
+        production:
+            symfony: { env: 'prod' }
+            on-deploy:
+                - symfony/cache-warmup
+</code></pre>
+
+                <h3 id="taskFS">File System</h3>
+                <p>Simple file system operations are common in the workflow of a deployment, for example coping a configuration file for a specific environment, or removing a lock file, or moving one file around.</p>
+                <p>Magallanes provides three simple operations: copy, move, and remove. Besides adding this operations to your deployment process you gain the advantage of defining the file paths with variables dependant of the deployment.</p>
+
+                <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    environments:
+        production:
+            on-deploy:
+                - fs/copy: { from: 'app/config/envs/%environment%.yml', to: 'app/config/parameters.yml' }
+</code></pre>
+                <p>The example above, when ran with <kbd>bin/mage deploy production</kbd> the <code>from</code> path will be converted to <code>app/config/envs/production.yml</code></p>
+                <p>The supported variables are: <code>%environment%</code>, <code>%host%</code>, <code>%release%</code>.</p>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th width="110">Name</th>
+                                <th width="150">Parameters</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>fs/copy</code></td>
+                                <td>
+                                    <p><code>from</code> file path</p>
+                                    <p><code>to</code> file path</p>
+                                </td>
+                                <td>Will copy a file executing <kbd>cp -p FROM TO</kbd>.</td>
+                            </tr>
+                            <tr>
+                                <td><code>fs/link</code></td>
+                                <td>
+                                    <p><code>from</code> file path</p>
+                                    <p><code>to</code> file path</p>
+                                </td>
+                                <td>Will symlink a file executing <kbd>ln -snf FROM TO</kbd>.</td>
+                            </tr>
+                            <tr>
+                                <td><code>fs/move</code></td>
+                                <td>
+                                    <p><code>from</code> file path</p>
+                                    <p><code>to</code> file path</p>
+                                </td>
+                                <td>Will move a file executing <kbd>mv FROM TO</kbd>.</td>
+                            </tr>
+                            <tr>
+                                <td><code>fs/remove</code></td>
+                                <td>
+                                    <p><code>file</code> file path</p>
+                                </td>
+                                <td>Will delete a file executing <kbd>rm FILE</kbd>.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>These commands are executed according to the stage they are placed on. If defined on <code>pre-deployment</code> and <code>post-deployment</code> the tasks are going to be executed locally,
+                    otherwise they are going to be executed on each host inside the <code>host_path</code> plus the release directory path if releases are enabled.</p>
+
+                <div class="callout callout-warning" role="alert">
+                    <h4>Regarding Symlinks, Part II</h4>
+                    <p>If you are going to use relative symlinks inside your release directory, remember that the real path is <code>/var/www/app/releases/20170102121530/</code> and not <code>/var/www/app/current</code></p>
+                    <p>So if you want to go "one directory down", for example to <code>/var/www/app/shared</code>, the symlink will be <code>../../shared</code>, also this is without taking into account the levels added by
+                        the link you are making, you have to take those into account too.</p>
+                    <p>Suppose you want to link a directory at the <code>host_path</code> level while using releases, then you should write the task as follows:</p>
+
+                    <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    environments:
+        production:
+            host_path: /var/www
+            releases: 4
+            on-deploy:
+                - fslink: { from: '../../../shared/images', to: 'web/images' }
+</code></pre>
+                    <p>The path <code>../../../shared/images</code> when taking the extra level of <code>web</code> (the directory where the symlink will be created) and releases are enabled it is treated as <code>/var/www/releases/20170101061530/web/../../../shared/images</code> which resolves to <code>/var/www/shared/images</code>,
+                        this is valid even if you are in <code>current</code>, because it is a symlink inside a symlink, it's like an <em>inception</em> thing. Same logic applies when leveling up directories.</p>
+                </div>
+
+            </section>
+
+            <section>
+                <h2 id="cookbook">Cookbook</h2>
+
+                <h3 id="custom-tasks">Custom Tasks</h3>
+                <p>Magallanes is a powerful tool just as it is, but to really unleash it's potential you have to push it a little more. With custom tasks you can do whatever you want whenever you want.</p>
+                <p>Just like the built in tasks you can create your own, anywhere in your code. These tasks must comply two requirements: extend the class <code>Mage\Task\AbstractTask</code> and be loaded with Composer's autoload, and just that!</p>
+
+                <p>Let's see a very basic example.</p>
+                <pre class="line-numbers" data-line="6-7, 22-23, 29-30">
+<code class="language-php">&lt;?php
+namespace AppBundle\Library\Deployment;
+
+use Symfony\Component\Process\Process;
+use Mage\Task\Exception\ErrorException;
+use Mage\Task\AbstractTask;
+
+class PurgeMemcachedTask extends AbstractTask {
+    public function getName()
+    {
+        return 'custom/purge-memcached';
+    }
+
+    public function getDescription()
+    {
+        return '[Custom] Purging Memcached';
+    }
+
+    public function execute()
+    {
+        if (!array_key_exists('server', $this-&gt;options) || !array_key_exists('port', $this-&gt;options)) {
+            throw new ErrorException('Parameters "server" and "port" are required.');
+        }
+
+        $cmd = sprintf('echo "flush_all" | netcat %s %d', $this-&gt;options['server'], $this-&gt;options['port']);
+
+        /** @var Process $process */
+        $process = $this-&gt;runtime-&gt;runCommand($cmd);
+        return $process-&gt;isSuccessful();
+    }
+}
+</code></pre>
+
+                <p>You will be able to use this task as follows</p>
+
+                <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    environments:
+        production:
+            post-deploy:
+                - 'AppBundle\Library\Deployment\PurgeMemcachedTask': { server: '10.0.0.50', port: 11211 }
+</code></pre>
+                <p>Highlighted in the PHP code above you will notices some interesting things. First of all the Task Class is pretty simple, it extends <code>Mage\Task\AbstractTask</code>
+                    and implements three methods: <code>getName</code>, <code>getDescription</code>, and <code>execute</code>. Then the <code>$this->options</code> property is an array filled
+                    with the parameters defined on the task declaration, <code>{ server: '10.0.0.50', port: 11211 }</code> in this example.</p>
+                <p>The <code>server</code> and <code>port</code> parameters are needed for the execution of the task, so if these weren't defined an exception is thrown, <code>false</code>
+                    could have been returned at that point but the advantage of throwing <code>ErrorException</code> is that the message will be displayed.</p>
+                <p>All tasks have access to the <code>$this-&gt;runtime</code> property, which is an instance of <code>Mage\Runtime\Runtime</code>, this instance has everything about what's going on
+                    in Magallanes, and also allows you to execute command line sentences. When you invoke the <code>runCommand</code> method the Runtime instance will lookup in which stage it is,
+                    if it is Pre Deploy or Post Deploy then the command will be execute locally, otherwise it will be executed remotely on each defined host. The <code>process</code> returned is an instance of the Process Symfony Component.</p>
+                <p>Finally a boolean status is returned based on the execution of the command, the <code>isSuccessful</code> will return <code>true</code> or <code>false</code> and this will
+                    mark the task as <code>OK</code> or <code>FAIL</code> respectively.</p>
+                <div class="callout callout-success" role="alert">
+                    <h4>Learn more about Tasks</h4>
+                    <p>Building tasks is a massive content, the best way to learn how to make your own tasks is by looking at the already built in tasks.</p>
+                </div>
+
+                <h3 id="custom-config">Custom Configuration</h3>
+                <p>In the same lines as Custom Tasks, having an elastic configuration is also handy. Suppose you have a Custom Task that needs a bunch of parameters,
+                    or that you want to configure it globally and not for each environment. Well that's just plain easy.</p>
+                <p>Let's go for the first case, and following the Custom Task defined earlier, you want to be able to set the <code>server</code> and <code>port</code> on each environment and call the task twice.</p>
+
+                <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    environments:
+        production:
+            memcached: { server: '10.0.0.50', port: 11211 }
+            pre-deploy:
+                - 'AppBundle\Library\Deployment\PurgeMemcachedTask'
+            post-deploy:
+                - 'AppBundle\Library\Deployment\PurgeMemcachedTask'
+</code></pre>
+            <p>In theory this will trigger your custom task at the beginning and at the end of the deployment, and you have added a <code>memcached</code> section at the environment level.
+                Now let's tweak the Custom Task to read from that definition.</p>
+                <pre class="line-numbers" data-line="22-23, 27">
+<code class="language-php">&lt;?php
+namespace AppBundle\Library\Deployment;
+
+use Symfony\Component\Process\Process;
+use Mage\Task\Exception\ErrorException;
+use Mage\Task\AbstractTask;
+
+class PurgeMemcachedTask extends AbstractTask {
+    public function getName()
+    {
+        return 'custom/purge-memcached';
+    }
+
+    public function getDescription()
+    {
+        return '[Custom] Purging Memcached';
+    }
+
+    public function execute()
+    {
+        $options = $this->runtime->getEnvOption('memcached', []);
+        if (!is_array($options) || !array_key_exists('server', $options) || !array_key_exists('port', $options)) {
+            throw new ErrorException('Parameters "server" and "port" are required.');
+        }
+
+        $cmd = sprintf('echo "flush_all" | netcat %s %d', $options['server'], $options['port']);
+
+        /** @var Process $process */
+        $process = $this-&gt;runtime-&gt;runCommand($cmd);
+        return $process-&gt;isSuccessful();
+    }
+}
+</code></pre>
+                <p>Only three lines of code changed! Amazing! The <code>getEnvOption</code> method will look for the given key at the current environment, and return the second argument as default.
+                    Given that the value returned can be anything there is the extra check <code>is_array($options)</code> to make sure we are dealing with an array.</p>
+
+                <p>In the folloing case let's move the configuration globally.</p>
+                <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    memcached: { server: '10.0.0.50', port: 11211 }
+    environments:
+        production:
+            post-deploy:
+                - 'AppBundle\Library\Deployment\PurgeMemcachedTask'
+        pre-production:
+            post-deploy:
+                - 'AppBundle\Library\Deployment\PurgeMemcachedTask'
+</code></pre>
+
+                <pre class="line-numbers" data-line="22">
+<code class="language-php">&lt;?php
+namespace AppBundle\Library\Deployment;
+
+use Symfony\Component\Process\Process;
+use Mage\Task\Exception\ErrorException;
+use Mage\Task\AbstractTask;
+
+class PurgeMemcachedTask extends AbstractTask {
+    public function getName()
+    {
+        return 'custom/purge-memcached';
+    }
+
+    public function getDescription()
+    {
+        return '[Custom] Purging Memcached';
+    }
+
+    public function execute()
+    {
+        $options = $this->runtime->getConfigOption('memcached', []);
+        if (!is_array($options) || !array_key_exists('server', $options) || !array_key_exists('port', $options)) {
+            throw new ErrorException('Parameters "server" and "port" are required.');
+        }
+
+        $cmd = sprintf('echo "flush_all" | netcat %s %d', $options['server'], $options['port']);
+
+        /** @var Process $process */
+        $process = $this-&gt;runtime-&gt;runCommand($cmd);
+        return $process-&gt;isSuccessful();
+    }
+}
+</code></pre>
+                <p>With the <code>getConfigOption</code> method will look for the given key at the root of the configuration, and return the second argument as default.
+                    Having a configuration in this level can be useful if you need a shared key for all the environments or a common path to a binary, etc.</p>
+
+                <div class="callout callout-info" role="alert">
+                    <h4>Pro Tip!</h4>
+                    <p>If you want a very extensible configuration, you can combine everything, and use the three levels of configuration, like this:</p>
+                <pre class="line-numbers">
+<code class="language-php">$globalOptions = $this-&gt;runtime-&gt;getConfigOption('memcached', []);
+$envOptions = $this-&gt;runtime-&gt;getEnvOption('memcached', []);
+$options = array_merge(
+    (is_array($globalOptions) ? $globalOptions : []),
+    (is_array($envOptions) ? $envOptions : []),
+    $this-&gt;options
+);</code></pre>
+                    <p>In this example the <code>$options</code> variable will have a combination of all three levels of configuration, giving priority to the most granular level.</p>
+                </div>
+            </section>
+        
+            <section>
+                <h2 id="changelog">Changelog</h2>
+
+                <h4>Nostromo - v3 Series</h4>
+                <h5>v3.0.0</h5>
+                <ul class="changelog">
+                    <li class="ch-added">Added all this awesome code</li>
+                    <li class="ch-removed">Not compatible with v1</li>
+                </ul>
+
+                <br />
+
+                <div class="callout callout-warning" role="alert">
+                    <h4>Where are the old Docs?</h4>
+                    <p>Version 1 of Magallanes has long reached it's end of life cycle, still you can find it's (in)documentation <a href="http://v1.magephp.com" target="_blank">here</a>.</p>
+                </div>
+            </section>
+
+            <section>
+                <h2 id="thanks">Thanks</h2>
+                <p>I want to give thanks to all the PHP community, those unsung heroes who continuously push the boundaries of technology.</p>
+                <p>And special thanks to my team mates in <a href="http://www.acilia.es" target="_blank">Acilia Internet</a> for they continuing support, ideas, and challenges that made this project came to be in the first place.</p>
+            </section>
+
+        </article>
+        <!-- END Main content -->
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container-fluid">
+            <a id="scroll-up" href="#"><i class="fa fa-angle-up"></i></a>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <p>&copy; 2011 - 2017 | Magallanes is an open source tool created and maintained by <a href="http://www.andresmontanez.com" target="_blank">Andrés Montañez</a> (among many other contributors) and completely written in PHP.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- END Footer -->
+
+<!-- Scripts -->
+<script src="assets/js/theDocs.all.min.js"></script>
+<script src="assets/js/theDocs.js"></script>
+<script src="assets/js/custom.js"></script>
+
+</body>
+</html>
