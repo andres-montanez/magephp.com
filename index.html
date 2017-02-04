@@ -931,12 +931,16 @@ Finished Magallanes</samp></pre>
                 <h3 id="taskComposer">Composer</h3>
                 <p>Composer has become an integral part of our PHP applications, so is handy to have some built in tasks for interacting with Composer.</p>
                 <p>By default it is assumed that Composer is installed globally so it will be invoked with <kbd>composer</kbd>, but if you have it in an
-                    specific path you can configure it at root level under the <code>composer</code> section with the <code>path</code> parameter.</p>
+                    specific path you can configure it at root level or at environment level under the <code>composer</code> section with the <code>path</code> parameter.</p>
 
                 <pre class="line-numbers">
 <code class="language-yaml">magephp:
     composer:
         path: /alternative/path-to/composer.phar
+    environments:
+        production:
+            composer:
+                path: /usr/bin/composer
 </code></pre>
 
                 <p>The following tasks are available in Magallanes for using Composer.</p>
@@ -1319,16 +1323,17 @@ class PurgeMemcachedTask extends AbstractTask {
 
                 <div class="callout callout-info" role="alert">
                     <h4>Pro Tip!</h4>
-                    <p>If you want a very extensible configuration, you can combine everything, and use the three levels of configuration, like this:</p>
+                    <p>If you want a very extensible configuration, you can combine everything, the method <code>Runtime::getMergedOption</code> will combine the ConfigOption and the EnvOption (in that order)
+                        so you can overwrite a global config entry at the environment entry, like this:</p>
                 <pre class="line-numbers">
-<code class="language-php">$globalOptions = $this-&gt;runtime-&gt;getConfigOption('memcached', []);
-$envOptions = $this-&gt;runtime-&gt;getEnvOption('memcached', []);
-$options = array_merge(
-    (is_array($globalOptions) ? $globalOptions : []),
-    (is_array($envOptions) ? $envOptions : []),
+<code class="language-php">$options = array_merge(
+    $this-&gt;runtime-&gt;getMergedOption('memcached'),
     $this-&gt;options
 );</code></pre>
-                    <p>In this example the <code>$options</code> variable will have a combination of all three levels of configuration, giving priority to the most granular level.</p>
+                    <p>In this example the <code>$options</code> variable will have a combination of all three levels of configuration, giving priority to the most granular level.
+                        <br/>
+                        <code>Runtime::getMergedOption</code> default value is <code>[]</code>.
+                    </p>
                 </div>
             </section>
         
@@ -1336,6 +1341,12 @@ $options = array_merge(
                 <h2 id="changelog">Changelog</h2>
 
                 <h4>Nostromo - v3 Series</h4>
+                <h5>v3.0.x</h5>
+                <ul class="changelog">
+                    <li class="ch-updated">Allow Composer task options to be overwritten at environment level</li>
+                    <li class="ch-added">Add new method <code>Runtime::getMergedOption</code> to merge ConfigOption and EnvOption</li>
+                </ul>
+
                 <h5>v3.0.0</h5>
                 <ul class="changelog">
                     <li class="ch-added">Added all this awesome code</li>
