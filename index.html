@@ -1086,7 +1086,7 @@ Finished Magallanes</samp></pre>
                         <thead>
                             <tr>
                                 <th width="110">Name</th>
-                                <th width="150">Parameters</th>
+                                <th width="200">Parameters</th>
                                 <th>Description</th>
                             </tr>
                         </thead>
@@ -1096,31 +1096,35 @@ Finished Magallanes</samp></pre>
                                 <td>
                                     <p><code>from</code> file path</p>
                                     <p><code>to</code> file path</p>
+                                    <p><code>flags</code> default <var>-p</var></p>
                                 </td>
-                                <td>Will copy a file executing <kbd>cp -p FROM TO</kbd>.</td>
+                                <td>Will copy a file executing <kbd>cp -p FROM TO</kbd>, be careful if changing the flags.</td>
                             </tr>
                             <tr>
                                 <td><code>fs/link</code></td>
                                 <td>
                                     <p><code>from</code> file path</p>
                                     <p><code>to</code> file path</p>
+                                    <p><code>flags</code> default <var>-snf</var></p>
                                 </td>
-                                <td>Will symlink a file executing <kbd>ln -snf FROM TO</kbd>.</td>
+                                <td>Will symlink a file executing <kbd>ln -snf FROM TO</kbd>, be careful if changing the flags.</td>
                             </tr>
                             <tr>
                                 <td><code>fs/move</code></td>
                                 <td>
                                     <p><code>from</code> file path</p>
                                     <p><code>to</code> file path</p>
+                                    <p><code>flags</code> default empty</p>
                                 </td>
-                                <td>Will move a file executing <kbd>mv FROM TO</kbd>.</td>
+                                <td>Will move a file executing <kbd>mv FROM TO</kbd>, plus the given flags.</td>
                             </tr>
                             <tr>
                                 <td><code>fs/remove</code></td>
                                 <td>
                                     <p><code>file</code> file path</p>
+                                    <p><code>flags</code> default empty</p>
                                 </td>
-                                <td>Will delete a file executing <kbd>rm FILE</kbd>.</td>
+                                <td>Will delete a file executing <kbd>rm FILE</kbd>, plus the given flags.</td>
                             </tr>
                             <tr>
                                 <td><code>fs/chmod</code></td>
@@ -1129,7 +1133,7 @@ Finished Magallanes</samp></pre>
                                     <p><code>mode</code> mode to set</p>
                                     <p><code>flags</code> default empty</p>
                                 </td>
-                                <td>Will change a file's mode executing <kbd>chmod MODE FILE</kbd>.</td>
+                                <td>Will change a file's mode executing <kbd>chmod MODE FILE</kbd>, plus the given flags.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1351,9 +1355,10 @@ class PurgeMemcachedTask extends AbstractTask {
 
                 <h4>Nostromo - v3 Series</h4>
 
-                <h5>v3.0.x</h5>
+                <h5>v3.X</h5>
                 <ul class="changelog">
-                    <li class="added">Add new File System task, to change file's modes (fs/chmod)</li>
+                    <li class="ch-added">Allow to flag Filesystem tasks</li>
+                    <li class="ch-added">Add new File System task, to change file's modes (fs/chmod)</li>
                     <li class="ch-fixed">Ignore empty exclude lines</li>
                     <li class="ch-updated">Allow Composer task options to be overwritten at environment level</li>
                     <li class="ch-added">Add new method <code>Runtime::getMergedOption</code> to merge ConfigOption and EnvOption</li>
