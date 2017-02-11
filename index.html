@@ -1122,6 +1122,15 @@ Finished Magallanes</samp></pre>
                                 </td>
                                 <td>Will delete a file executing <kbd>rm FILE</kbd>.</td>
                             </tr>
+                            <tr>
+                                <td><code>fs/chmod</code></td>
+                                <td>
+                                    <p><code>file</code> file path</p>
+                                    <p><code>mode</code> mode to set</p>
+                                    <p><code>flags</code> default empty</p>
+                                </td>
+                                <td>Will change a file's mode executing <kbd>chmod MODE FILE</kbd>.</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -1344,6 +1353,7 @@ class PurgeMemcachedTask extends AbstractTask {
 
                 <h5>v3.0.x</h5>
                 <ul class="changelog">
+                    <li class="added">Add new File System task, to change file's modes (fs/chmod)</li>
                     <li class="ch-fixed">Ignore empty exclude lines</li>
                     <li class="ch-updated">Allow Composer task options to be overwritten at environment level</li>
                     <li class="ch-added">Add new method <code>Runtime::getMergedOption</code> to merge ConfigOption and EnvOption</li>
