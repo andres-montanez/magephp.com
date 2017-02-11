@@ -971,6 +971,14 @@ Finished Magallanes</samp></pre>
                                 </td>
                                 <td>Will execute <kbd>composer dump-autoload</kbd> plus the given flags.</td>
                             </tr>
+                            <tr>
+                                <td><code>composer/self-update</code></td>
+                                <td>
+                                    <p><code>path</code> default <var>composer</var></p>
+                                    <p><code>days</code> default <var>60</var></p>
+                                </td>
+                                <td>Will execute <kbd>composer self-update</kbd> to the latest version. The task will skip if Composer is up-to-date.</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -1357,6 +1365,7 @@ class PurgeMemcachedTask extends AbstractTask {
 
                 <h5>v3.X</h5>
                 <ul class="changelog">
+                    <li class="ch-added">Add new Composer task, to update phar (composer/self-update)</li>
                     <li class="ch-added">Allow to flag Filesystem tasks</li>
                     <li class="ch-added">Add new File System task, to change file's modes (fs/chmod)</li>
                     <li class="ch-fixed">Ignore empty exclude lines</li>
