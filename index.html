@@ -203,6 +203,15 @@
 
                 <p><kbd>bin/mage version</kbd></p>
                 <p><pre><samp>Magallanes v3.0.0 [Nostromo]</samp></pre></p>
+
+                <div class="callout callout-info" role="alert">
+                    <h4>Pro Tip: Global Install!</h4>
+                    <p>You can configure Composer to install Magallanes globally:</p>
+                    <kbd>composer global require "andres-montanez/magallanes"</kbd>
+                    <p>Just make sure your global vendor binaries directory is in your <code>$PATH</code> environment variable, you can get its location with the following command:</p>
+                    <kbd>composer global config bin-dir --absolute</kbd>
+                    <p>Find out more about globals in <a href="https://getcomposer.org/doc/03-cli.md#global" target="_blank">Composer official documentation</a>.</p>
+                </div>
             </section>
 
 
