@@ -213,6 +213,11 @@
                     <kbd>composer global config bin-dir --absolute</kbd>
                     <p>Find out more about globals in <a href="https://getcomposer.org/doc/03-cli.md#global" target="_blank">Composer official documentation</a>.</p>
                 </div>
+
+                <div class="callout callout-warning" role="alert">
+                    <h4>Warning</h4>
+                    <p>If you install Magallanes globally, you won't be able to use custom tasks, because your app autoloader will not be used.</p>
+                </div>
             </section>
 
 
@@ -1285,11 +1290,17 @@ class PurgeMemcachedTask extends AbstractTask {
                     in Magallanes, and also allows you to execute command line sentences. When you invoke the <code>runCommand</code> method the Runtime instance will lookup in which stage it is,
                     if it is Pre Deploy or Post Deploy then the command will be execute locally, otherwise it will be executed remotely on each defined host. The <code>process</code> returned is an instance of the Process Symfony Component.</p>
                 <p>Finally a boolean status is returned based on the execution of the command, the <code>isSuccessful</code> will return <code>true</code> or <code>false</code> and this will
-                    mark the task as <code>OK</code> or <code>FAIL</code> respectively.</p>
+                    mark the task as <code>OK</code> or <code>FAIL</code> respectively.
+                </p>
                 <div class="callout callout-success" role="alert">
                     <h4>Learn more about Tasks</h4>
                     <p>Building tasks is a massive content, the best way to learn how to make your own tasks is by looking at the already built in tasks.</p>
                 </div>
+                <div class="callout callout-warning" role="alert">
+                    <h4>Warning</h4>
+                    <p>If you install Magallanes globally, you won't be able to use custom tasks, because your app autoloader will not be used.</p>
+                </div>
+
 
                 <h3 id="custom-config">Custom Configuration</h3>
                 <p>In the same lines as Custom Tasks, having an elastic configuration is also handy. Suppose you have a Custom Task that needs a bunch of parameters,
