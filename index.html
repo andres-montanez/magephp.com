@@ -82,6 +82,7 @@
                     <li><a href="#taskComposer">Composer</a></li>
                     <li><a href="#taskSymfony">Symfony</a></li>
                     <li><a href="#taskFS">File System</a></li>
+                    <li><a href="#taskExec">Execute</a></li>
                 </ul>
             </li>
             <li>
@@ -1179,6 +1180,49 @@ Finished Magallanes</samp></pre>
                         this is valid even if you are in <code>current</code>, because it is a symlink inside a symlink, it's like an <em>inception</em> thing. Same logic applies when leveling up directories.</p>
                 </div>
 
+                <h3 id="taskExec">Execute</h3>
+                <p>Sometimes you need to execute a command, a shell script, or perhaps restart a service. You could create a custom task for that, but with this task you can configure Magallanes to do it easily.</p>
+
+                <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    environments:
+        production:
+            post-deploy:
+                - exec: { cmd: './reload-docker.sh', desc: 'Reload Docker instances' }
+</code></pre>
+                <p>The example above, when ran with <kbd>./reload-docker.sh</kbd> locally on the <code>post-deploy</code> stage.
+                    The command will be executed locally or remotely based on the stage in which the task is defined.</p>
+
+                <p>The following are the parameters available for this task.</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th width="100">Parameter</th>
+                            <th width="100">Default</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><code>cmd</code></td>
+                            <td>empty</td>
+                            <td>The command line to execute. This parameter is mandatory.</td>
+                        </tr>
+                        <tr>
+                            <td><code>desc</code></td>
+                            <td>empty</td>
+                            <td>A description to output on the task execution.</td>
+                        </tr>
+                        <tr>
+                            <td><code>timeout</code></td>
+                            <td>120</td>
+                            <td>Time out wait for the command execution, if the task takes too long you can tweak it here.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
             </section>
 
             <section>
@@ -1374,6 +1418,7 @@ class PurgeMemcachedTask extends AbstractTask {
 
                 <h5>v3.X</h5>
                 <ul class="changelog">
+                    <li class="ch-added">Add new Exec task to execute arbitrary shell commands</li>
                     <li class="ch-added">Add new Composer task, to update phar (composer/self-update)</li>
                     <li class="ch-added">Allow to flag Filesystem tasks</li>
                     <li class="ch-added">Add new File System task, to change file's modes (fs/chmod)</li>
