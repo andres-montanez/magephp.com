@@ -1179,7 +1179,7 @@ Finished Magallanes</samp></pre>
             host_path: /var/www
             releases: 4
             on-deploy:
-                - fslink: { from: '../../../shared/images', to: 'web/images' }
+                - fs/link: { from: '../../../shared/images', to: 'web/images' }
 </code></pre>
                     <p>The path <code>../../../shared/images</code> when taking the extra level of <code>web</code> (the directory where the symlink will be created) and releases are enabled it is treated as <code>/var/www/releases/20170101061530/web/../../../shared/images</code> which resolves to <code>/var/www/shared/images</code>,
                         this is valid even if you are in <code>current</code>, because it is a symlink inside a symlink, it's like an <em>inception</em> thing. Same logic applies when leveling up directories.</p>
