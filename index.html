@@ -89,6 +89,7 @@
                 <a href="#cookbook">Cookbook</a>
                 <ul>
                     <li><a href="#custom-tasks">Custom Tasks</a></li>
+                    <li><a href="#custom-tasks-register">Pre Register Custom Tasks</a></li>
                     <li><a href="#custom-config">Custom Configuration</a></li>
                 </ul>
             </li>
@@ -236,6 +237,7 @@
         production:
             user: app
             branch: master
+            from: ./
             host_path: /var/www/myapp
             releases: 4
             exclude:
@@ -304,6 +306,14 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td><code>from</code></td>
+                                <td>
+                                    <p>This is the starting point/path from which the Tar or Rsync will be executed.</p>
+                                    <p>The default value is <code>./</code> so you can safely leave it undefined if you will deploy the whole directory.</p>
+                                    <p>This only affects the <kbd>tar</kbd> and <kbd>rsync</kbd> commands execution.</p>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td><code>host_path</code></td>
                                 <td>
                                     <p>It's the path on the remote hosts to where the code is going to be deployed. This parameter is shared with all hosts.</p>
@@ -351,8 +361,20 @@
                             </tr>
                             <tr>
                                 <td><code>exclude</code></td>
-                                <td>A list of files or directories to exclude when doing Rsync or when creating the Tar for the deployment.
+                                <td>
+                                    <p>A list of files or directories to exclude when doing Rsync or when creating the Tar for the deployment.
                                     Be careful with the wildcard and for better control always start with <code>./</code> so you are sure it's from the root onwards.
+                                    </p>
+                                    <p>
+                                        Also you can define this option globally and all your environments will inherit it.
+                                        <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    exclude:
+        - ./var/cache/*
+        - ./var/log/*
+        - ./web/app_dev.php
+</code></pre>
+                                    </p>
                                 </td>
                             </tr>
                             <tr>
@@ -975,8 +997,12 @@ Finished Magallanes</samp></pre>
                                 <td>
                                     <p><code>path</code> default <var>composer</var></p>
                                     <p><code>flags</code> default <var>--optimize-autoloader</var></p>
+                                    <p><code>timeout</code> default <var>120</var></p>
                                 </td>
-                                <td>Will execute <kbd>composer install</kbd> plus the given flags.</td>
+                                <td>
+                                    <p>Will execute <kbd>composer install</kbd> plus the given flags.</p>
+                                    <p>If your composer install takes too much time, you can increase the task timeout.</p>
+                                </td>
                             </tr>
                             <tr>
                                 <td><code>composer/dump-autoload</code></td>
@@ -1301,7 +1327,6 @@ class PurgeMemcachedTask extends AbstractTask {
                     <p>If you install Magallanes globally, you won't be able to use custom tasks, because your app autoloader will not be used.</p>
                 </div>
 
-
                 <h3 id="custom-config">Custom Configuration</h3>
                 <p>In the same lines as Custom Tasks, having an elastic configuration is also handy. Suppose you have a Custom Task that needs a bunch of parameters,
                     or that you want to configure it globally and not for each environment. Well that's just plain easy.</p>
@@ -1420,12 +1445,45 @@ class PurgeMemcachedTask extends AbstractTask {
                         <code>Runtime::getMergedOption</code> default value is <code>[]</code>.
                     </p>
                 </div>
+
+                <h3 id="custom-tasks-register">Pre Register Custom Tasks</h3>
+                <p>It will be very likely that you will use a Custom Task several times across your configuration, and defining it by it's class can be cumbersome.</p>
+                <p>Another option is to pre register your tasks, then you will be able to use them by it's name.</p>
+                <p>In the previous section we defined a custom class which returns the name <code>custom/purge-memcached</code>, now we are going to pre register it!</p>
+
+                <p>
+                    <pre class="line-numbers" data-line="9,10">
+<code class="language-yaml">magephp:
+    environments:
+        production:
+            pre-deploy:
+                - custom/purge-memcached: { server: '10.0.0.50', port: 11211 }
+            post-deploy:
+                - custom/purge-memcached: { server: '10.0.0.50', port: 11211 }
+    custom_tasks:
+        - 'AppBundle\Library\Deployment\PurgeMemcachedTask'
+</code></pre>
+                </p>
+                <p>
+                    By registering your Custom Tasks in the <code>custom_tasks</code> section of the configuration you can invoke them by the value you defined in the name section.
+                    Now if you change your class or move it around you just need to change it in one place.
+                </p>
             </section>
         
             <section>
                 <h2 id="changelog">Changelog</h2>
 
                 <h4>Nostromo - v3 Series</h4>
+
+                <h5>v3.2.0</h5>
+                <ul class="changelog">
+                    <li class="ch-added">Allow to Pre Register custom tasks</li>
+                    <li class="ch-added">New <code>from</code> option to define start point</li>
+                    <li class="ch-added">Allow to define excludes in the global scop</li>
+                    <li class="ch-updated">Improve code quality, remove duplications on Symfony Tasks</li>
+                    <li class="ch-updated">Improve code quality, remove duplications on Composer Tasks</li>
+                    <li class="ch-updated">Allow to define custom timeout to Composer:Install</li>
+                </ul>
 
                 <h5>v3.1.0</h5>
                 <ul class="changelog">
