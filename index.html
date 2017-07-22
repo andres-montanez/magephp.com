@@ -419,6 +419,21 @@
                     The best way to make your connection is by using SSH Keys across your servers. These flags are also inherited by the Rsync and Tar tasks.
                 </p>
 
+                <div class="callout callout-info" role="alert">
+                    <h4>Pro Tip: Port in Host</h4>
+                    <p>You can configure the port of the host in it's definition by using the colon notation:</p>
+                    <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    environments:
+        production:
+            hosts:
+                - webserver1
+                - webserver2:2222
+                - webserver3
+</code></pre>
+                    <p>In the example below the host <kbd>webserver2</kbd> will use port <kbd>2222</kbd> instead of the default.</p>
+                </div>
+
                 <div class="callout callout-danger" role="alert">
                     <h4>Warning</h4>
                     <p>Be careful if you overwrite these flags, otherwise you may experience problems when connecting to the hosts.</p>
@@ -426,13 +441,16 @@
 
                 <h3 id="tar">Tar</h3>
                 <p>The Tar tasks uses two set of flags, one for creation of the file, and another for it's extraction. By default the creation flags are <code>cfzop</code> and the extraction flags are <code>zfzop</code>, you can overwrite them if you need to in the environment section.</p>
+                <p>Also you can specify the path to the tar binary for creation and extraction, by default the binary used is <kbd>tar</kbd>.</p>
 
                 <pre class="line-numbers">
 <code class="language-yaml">magephp:
     environments:
         production:
             tar_create: cfh
-            tar_extract: xf</code></pre>
+            tar_create_path: tar
+            tar_extract: xf
+            tar_extract_path: tar</code></pre>
 
                 <div class="callout callout-danger" role="alert">
                     <h4>Warning</h4>
@@ -1088,6 +1106,8 @@ Finished Magallanes</samp></pre>
                                 <td>
                                     <p><code>console</code> default <var>bin/console</var></p>
                                     <p><code>env</code> default <var>dev</var></p>
+                                    <p><code>flags</code> default empty</p>
+                                    <p><code>timeout</code> default <var>120</var></p>
                                 </td>
                                 <td>Will dump assetics by executing <kbd>bin/console assetic:dump --env=ENV</kbd> plus any given flags.</td>
                             </tr>
@@ -1474,6 +1494,12 @@ class PurgeMemcachedTask extends AbstractTask {
                 <h2 id="changelog">Changelog</h2>
 
                 <h4>Nostromo - v3 Series</h4>
+
+                <h5>v3.3.0</h5>
+                <ul class="changelog">
+                    <li class="ch-updated">Allow to define timeout (default 120s) for symfony/assetic-dump task</li>
+                    <li class="ch-added">Allow to define Host Port in Host configuration</li>
+                </ul>
 
                 <h5>v3.2.0</h5>
                 <ul class="changelog">
