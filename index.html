@@ -363,7 +363,7 @@
                                 <td><code>exclude</code></td>
                                 <td>
                                     <p>A list of files or directories to exclude when doing Rsync or when creating the Tar for the deployment.
-                                    Be careful with the wildcard and for better control always start with <code>./</code> so you are sure it's from the root onwards.
+                                        Be careful with the use of wildcards, also <kbd>rsync</kbd> and <kbd>tar</kbd> take <code>./</code> differently, trye <code>./</code> for <kbd>tar</kbd> and <code>/</code> for <kbd>rsync</kbd>.
                                     </p>
                                     <p>
                                         Also you can define this option globally and all your environments will inherit it.
@@ -1494,6 +1494,13 @@ class PurgeMemcachedTask extends AbstractTask {
                 <h2 id="changelog">Changelog</h2>
 
                 <h4>Nostromo - v3 Series</h4>
+
+                <h5>v3.4.0</h5>
+                <ul class="changelog">
+                    <li class="ch-added">Throw exception if <code>log_dir</code> is defined but directory doesn't exists</li>
+                    <li class="ch-fixed">Malformed ssh command when defining host:port notation</li>
+                    <li class="ch-updated">Remove timeout on Deploy with Tar or Rsync tasks</li>
+                </ul>
 
                 <h5>v3.3.0</h5>
                 <ul class="changelog">
