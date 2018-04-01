@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
 
-    <title>Magallanes v3 - Documentation</title>
+    <title>Magallanes v4 - Documentation</title>
 
     <!-- Styles -->
     <link href="assets/css/theDocs.all.min.css" rel="stylesheet">
@@ -129,7 +129,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="https://insight.sensiolabs.com/projects/ed0de53a-a12e-459b-9464-34def5907b56" target="_blank">SensioLabs Insight</a></li>
                         <li><a href="https://travis-ci.org/andres-montanez/Magallanes" target="_blank">Travis CI</a></li>
-                        <li><a href="https://coveralls.io/github/andres-montanez/Magallanes?branch=nostromo" target="_blank">Coveralls</a></li>
+                        <li><a href="https://coveralls.io/github/andres-montanez/Magallanes?branch=discovery-one" target="_blank">Coveralls</a></li>
                         <li><a href="https://github.com/andres-montanez/Magallanes" target="_blank">GitHub</a></li>
                     </ul>
                 </div>
@@ -141,7 +141,7 @@
         <!-- Banner -->
         <div class="magallanes-banner banner auto-size" style="background-color: #202020;;">
             <div class="container-fluid text-white">
-                <h1><strong>Magallanes</strong> <small>Nostromo Edition</small></h1>
+                <h1><strong>Magallanes</strong> <small>Discovery One Edition</small></h1>
                 <h5>The PHP Deployment Tool</h5>
             </div>
         </div>
@@ -168,10 +168,13 @@
                     Some of this tasks are quite common, like installing vendors and warming a cache, so there are some Built In Tasks for common usage. But you are encouraged to build your own... and share them!
                 </p>
 
-                <p>As it has always been, Magallanes is open to Pull Requests, just make sure you write tests for any new feature and all the new code has the appropriate coverage.</p>
+                <p>As it has always been, Magallanes is open to Pull Requests, just make sure you write tests for any new feature and all the new code has the appropriate coverage, we have 100% coverange and I plan on staying there. Also read the contribution document.</p>
 
-                <p>The current version of Magallanes (v3) has been completely rewritten with Symfony3 Components, in particular Console, Process, FileSystem, YAML, and Finder.
-                    Also the logging is delegated to Monolog, and of course all the power of Composer to glue all together.</p>
+                <p>The current version of Magallanes (v4) has been refactored to work with Symfony4 Components, in particular Console, Process, FileSystem, YAML, and Finder, and PHP 7.1.
+                    Also the logging is delegated to Monolog, and of course all the power of Composer to glue all together.
+                </p>
+
+                <p>The version 3 will be still maintained for bugs and compatibility with Symfony 3. If possible I will add back any new feature of v4, but no promises!</p>
             </section>
 
 
@@ -182,10 +185,10 @@
 
                 <pre class="line-numbers">
 <code class="language-json">"require": {
-    "andres-montanez/magallanes": "^3.0"
+    "andres-montanez/magallanes": "^4.0"
 }</code></pre>
 
-                <p>Also you can execute: <kbd>composer require andres-montanez/magallanes:^3.0</kbd></p>
+                <p>Also you can execute: <kbd>composer require andres-montanez/magallanes:^4.0</kbd></p>
 
                 <p>After installing you can invoke Magallanes with the <kbd>vendor/bin/mage</kbd> executable,
                     or you can configure Composer to link all vendors binaries into a more friendly directory,
@@ -204,7 +207,7 @@
                 <p>The most simple test is to check the installed version</p>
 
                 <p><kbd>bin/mage version</kbd></p>
-                <p><pre><samp>Magallanes v3.0.0 [Nostromo]</samp></pre></p>
+                <p><pre><samp>Magallanes v4.0.0 [Discovery One]</samp></pre></p>
 
                 <div class="callout callout-info" role="alert">
                     <h4>Pro Tip: Global Install!</h4>
@@ -217,7 +220,7 @@
 
                 <div class="callout callout-warning" role="alert">
                     <h4>Warning</h4>
-                    <p>If you install Magallanes globally, you won't be able to use custom tasks, because your app autoloader will not be used.</p>
+                    <p>If you install Magallanes globally, you won't be able to use custom tasks, because your app autoloader will not be used. You have been warned!</p>
                 </div>
             </section>
 
@@ -255,7 +258,6 @@
             on-deploy:
                 - symfony/cache-warmup: { env: 'dev' }
                 - symfony/assets-install: { env: 'dev' }
-                - symfony/assetic-dump: { env: 'dev' }
             on-release:
             post-release:
             post-deploy:
@@ -381,7 +383,7 @@
                                 <td><code>hosts</code></td>
                                 <td>
                                     <p>The list of hosts to which the code is going to be deployed. It can be an empty list, if so all deployment tasks will be skipped.</p>
-                                    <p>Make sure you can connect passwordless to all of them using SSH keys.</p>
+                                    <p><strong>Make sure you can connect passwordless to all of them using SSH keys.</strong></p>
                                 </td>
                             </tr>
                             <tr>
@@ -476,7 +478,7 @@
 </code></pre>
 
                 <p>The <code>log_dir</code> option is a directory where all the logs will be generated,
-                    at the beginning of the deployment the current log file will be informed.
+                    at the beginning of the deployment the current log file will be informed. If the directory doesn't exists, an error will be thrown, so make sure the directory for logs is available.
                 </p>
 
                 <h3 id="configReleases">Releases</h3>
@@ -544,6 +546,7 @@
 
                 <h3 id="workflow-overview">Overview</h3>
                 <p>Nice flowcharts coming soon ¯\_(ツ)_/¯</p>
+                <p><small><i>...or not</i></small></p>
 
 
                 <h3 id="stages">Stages</h3>
@@ -624,14 +627,14 @@
                 <h3 id="cmdVersion">Version</h3>
                 <p>Quite self explanatory, this command will tell you which version of Magallanes is being used.</p>
                 <p><kbd>bin/mage version</kbd></p>
-                <p><pre><samp>Magallanes v3.0.0 [Nostromo]</samp></pre></p>
+                <p><pre><samp>Magallanes v4.0.0 [Discovery One]</samp></pre></p>
 
                 <h3 id="cmdConfig">Config</h3>
                 <p>The Config is useful for debugging, it offers two subcommands: <kbd>dump</kbd> and <kbd>environments</kbd></p>
 
                 <h4>Dump</h4>
                 <p>This will dump your <code>.mage.yml</code> file as interpreted by the Yaml component, in a PHP array export.
-                    This is the interpreted output of the sample configuration.</p>
+                    This is the interpreted output of the sample configuration. This can be useful for debuging config errors, like bad indentation in the yaml file.</p>
                 <p><kbd>bin/mage config:dump</kbd></p>
                 <p><pre><samp>Starting Magallanes
 
@@ -678,13 +681,6 @@ array (
             'env' =&gt; 'dev',
           ),
         ),
-        2 =&gt;
-        array (
-          'symfony/assetic-dump' =&gt;
-          array (
-            'env' =&gt; 'dev',
-          ),
-        ),
       ),
       'on-release' =&gt; NULL,
       'post-release' =&gt; NULL,
@@ -718,7 +714,7 @@ Finished Magallanes</samp></pre>
 
                 <div class="callout callout-info" role="alert">
                     <h4>Pro Tip!</h4>
-                    <p>Magallanes Commands are in fact Symfony3 Console Commands, so you can shortcut them like this:</p>
+                    <p>Magallanes Commands are in fact Symfony Console Commands, so you can shortcut them like this:</p>
                     <p><kbd>bin/mage conf:env</kbd></p>
                 </div>
 
@@ -748,7 +744,6 @@ Finished Magallanes</samp></pre>
         Running [Deploy] Copying files with Tar ... OK
         Running [Symfony] Cache Warmup ... OK
         Running [Symfony] Assets Install ... OK
-        Running [Symfony] Assetic Dump ... OK
     Finished 5/5 tasks for On Deploy.
 
     Starting On Deploy tasks on host webserver2:
@@ -756,7 +751,6 @@ Finished Magallanes</samp></pre>
         Running [Deploy] Copying files with Tar ... OK
         Running [Symfony] Cache Warmup ... OK
         Running [Symfony] Assets Install ... OK
-        Running [Symfony] Assetic Dump ... OK
     Finished 5/5 tasks for On Deploy.
 
     Starting On Deploy tasks on host webserver3:
@@ -764,7 +758,6 @@ Finished Magallanes</samp></pre>
         Running [Deploy] Copying files with Tar ... OK
         Running [Symfony] Cache Warmup ... OK
         Running [Symfony] Assets Install ... OK
-        Running [Symfony] Assetic Dump ... OK
     Finished 5/5 tasks for On Deploy.
 
     Starting On Release tasks on host webserver1:
@@ -1053,8 +1046,8 @@ Finished Magallanes</samp></pre>
 </code></pre>
 
                 <h3 id="taskSymfony">Symfony</h3>
-                <p>Magallaes has been rebuilt with Symfony3 Components, so I like the framework a lot! It seems only fair to have some built in tasks for common Symfony integration.</p>
-                <p>By default it is assumed that the Symfony Console is located in <kbd>bin/console</kbd>, following the Symfony3 directory structure, but if you have it in an
+                <p>Magallaes is built with Symfony4 Components, so I like the framework a lot! It seems only fair to have some built in tasks for common Symfony integration.</p>
+                <p>By default it is assumed that the Symfony Console is located in <kbd>bin/console</kbd>, following the Symfony4 directory structure, but if you have it in an
                     specific path you can configure it at root level under the <code>symfony</code> section with the <code>console</code> parameter.</p>
 
                 <pre class="line-numbers">
@@ -1067,7 +1060,7 @@ Finished Magallanes</samp></pre>
                     <table class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th width="220">Name</th>
+                            <th width="240">Name</th>
                             <th width="270">Parameters</th>
                             <th>Description</th>
                         </tr>
@@ -1080,7 +1073,7 @@ Finished Magallanes</samp></pre>
                                     <p><code>env</code> default <var>dev</var></p>
                                     <p><code>flags</code> default empty</p>
                                 </td>
-                                <td>Will clear the appropriate environment's cache by executing <kbd>bin/console cache:clear --env=ENV</kbd> plus any given flags.</td>
+                                <td>Will clear the appropriate environment's cache by executing <kbd>bin/console cache:clear --env=&lt;env&gt;</kbd> plus any given flags.</td>
                             </tr>
                             <tr>
                                 <td><code>symfony/cache-warmup</code></td>
@@ -1089,7 +1082,30 @@ Finished Magallanes</samp></pre>
                                     <p><code>env</code> default <var>dev</var></p>
                                     <p><code>flags</code> default empty</p>
                                 </td>
-                                <td>Will warm up the appropriate environment's cache by executing <kbd>bin/console cache:warmup --env=ENV</kbd> plus any given flags.</td>
+                                <td>Will warm up the appropriate environment's cache by executing <kbd>bin/console cache:warmup --env=&lt;env&gt;</kbd> plus any given flags.</td>
+                            </tr>
+                            <tr>
+                                <td><code>symfony/cache-pool-clear</code></td>
+                                <td>
+                                    <p><code>console</code> default <var>bin/console</var></p>
+                                    <p><code>env</code> default <var>dev</var></p>
+                                    <p><code>flags</code> default empty</p>
+                                    <p><code>pools</code> name of the pool or pools</p>
+                                </td>
+                                <td>
+                                    Will clear the given pool or pools of cache by executing <kbd>bin/console cache:pool:clear &lt;pools&gt; --env=&lt;env&gt;</kbd> plus any given flags.
+                                    <br />
+                                    The <code>pools</code> parameter is treated like a string so you can pass any number of pools there, like <kbd>pool1 pool2 pool3</kbd>.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>symfony/cache-pool-prune</code></td>
+                                <td>
+                                    <p><code>console</code> default <var>bin/console</var></p>
+                                    <p><code>env</code> default <var>dev</var></p>
+                                    <p><code>flags</code> default empty</p>
+                                </td>
+                                <td>Will prune all the caches by executing <kbd>bin/console cache:pool:prune --env=&lt;env&gt;</kbd> plus any given flags.</td>
                             </tr>
                             <tr>
                                 <td><code>symfony/assets-install</code></td>
@@ -1099,17 +1115,7 @@ Finished Magallanes</samp></pre>
                                     <p><code>target</code> default <var>web</var></p>
                                     <p><code>flags</code> default <var>--symlink --relative</var></p>
                                 </td>
-                                <td>Will install the assets defined by the loaded bundles by executing <kbd>bin/console assets:install TARGET --env=ENV</kbd> plus the given flags.</td>
-                            </tr>
-                            <tr>
-                                <td><code>symfony/assetic-dump</code></td>
-                                <td>
-                                    <p><code>console</code> default <var>bin/console</var></p>
-                                    <p><code>env</code> default <var>dev</var></p>
-                                    <p><code>flags</code> default empty</p>
-                                    <p><code>timeout</code> default <var>120</var></p>
-                                </td>
-                                <td>Will dump assetics by executing <kbd>bin/console assetic:dump --env=ENV</kbd> plus any given flags.</td>
+                                <td>Will install the assets defined by the loaded bundles by executing <kbd>bin/console assets:install &lt;target&gt; --env=&lt;env&gt;</kbd> plus the given flags.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1167,7 +1173,7 @@ Finished Magallanes</samp></pre>
                                     <p><code>to</code> file path</p>
                                     <p><code>flags</code> default <var>-p</var></p>
                                 </td>
-                                <td>Will copy a file executing <kbd>cp -p FROM TO</kbd>, be careful if changing the flags.</td>
+                                <td>Will copy a file executing <kbd>cp -p &lt;from&gt; &lt;to&gt;</kbd>, be careful if changing the flags.</td>
                             </tr>
                             <tr>
                                 <td><code>fs/link</code></td>
@@ -1176,7 +1182,7 @@ Finished Magallanes</samp></pre>
                                     <p><code>to</code> file path</p>
                                     <p><code>flags</code> default <var>-snf</var></p>
                                 </td>
-                                <td>Will symlink a file executing <kbd>ln -snf FROM TO</kbd>, be careful if changing the flags.</td>
+                                <td>Will symlink a file executing <kbd>ln -snf &lt;from&gt; &lt;to&gt;</kbd>, be careful if changing the flags.</td>
                             </tr>
                             <tr>
                                 <td><code>fs/move</code></td>
@@ -1185,7 +1191,7 @@ Finished Magallanes</samp></pre>
                                     <p><code>to</code> file path</p>
                                     <p><code>flags</code> default empty</p>
                                 </td>
-                                <td>Will move a file executing <kbd>mv FROM TO</kbd>, plus the given flags.</td>
+                                <td>Will move a file executing <kbd>mv &lt;from&gt; &lt;to&gt;</kbd>, plus the given flags.</td>
                             </tr>
                             <tr>
                                 <td><code>fs/remove</code></td>
@@ -1193,7 +1199,7 @@ Finished Magallanes</samp></pre>
                                     <p><code>file</code> file path</p>
                                     <p><code>flags</code> default empty</p>
                                 </td>
-                                <td>Will delete a file executing <kbd>rm FILE</kbd>, plus the given flags.</td>
+                                <td>Will delete a file executing <kbd>rm &lt;file&gt;</kbd>, plus the given flags.</td>
                             </tr>
                             <tr>
                                 <td><code>fs/chmod</code></td>
@@ -1202,7 +1208,7 @@ Finished Magallanes</samp></pre>
                                     <p><code>mode</code> mode to set</p>
                                     <p><code>flags</code> default empty</p>
                                 </td>
-                                <td>Will change a file's mode executing <kbd>chmod MODE FILE</kbd>, plus the given flags.</td>
+                                <td>Will change a file's mode executing <kbd>chmod &lt;mode&gt; &lt;file&gt;</kbd>, plus the given flags.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1493,59 +1499,21 @@ class PurgeMemcachedTask extends AbstractTask {
             <section>
                 <h2 id="changelog">Changelog</h2>
 
-                <h4>Nostromo - v3 Series</h4>
+                <h4>Discovery One - v4 Series</h4>
 
-                <h5>v3.4.0</h5>
+                <h5>v4.0.0</h5>
                 <ul class="changelog">
-                    <li class="ch-added">Throw exception if <code>log_dir</code> is defined but directory doesn't exists</li>
-                    <li class="ch-fixed">Malformed ssh command when defining host:port notation</li>
-                    <li class="ch-updated">Remove timeout on Deploy with Tar or Rsync tasks</li>
-                </ul>
-
-                <h5>v3.3.0</h5>
-                <ul class="changelog">
-                    <li class="ch-updated">Allow to define timeout (default 120s) for symfony/assetic-dump task</li>
-                    <li class="ch-added">Allow to define Host Port in Host configuration</li>
-                    <li class="ch-added">Allow to specify the binary path of tar on for create and extract</li>
-                </ul>
-
-                <h5>v3.2.0</h5>
-                <ul class="changelog">
-                    <li class="ch-added">Allow to Pre Register custom tasks</li>
-                    <li class="ch-added">New <code>from</code> option to define start point</li>
-                    <li class="ch-added">Allow to define excludes in the global scop</li>
-                    <li class="ch-updated">Improve code quality, remove duplications on Symfony Tasks</li>
-                    <li class="ch-updated">Improve code quality, remove duplications on Composer Tasks</li>
-                    <li class="ch-updated">Allow to define custom timeout to Composer:Install</li>
-                </ul>
-
-                <h5>v3.1.0</h5>
-                <ul class="changelog">
-                    <li class="ch-added">Add new Exec task to execute arbitrary shell commands</li>
-                    <li class="ch-added">Add new Composer task, to update phar (composer/self-update)</li>
-                    <li class="ch-added">Allow to flag Filesystem tasks</li>
-                    <li class="ch-added">Add new File System task, to change file's modes (fs/chmod)</li>
-                    <li class="ch-fixed">Ignore empty exclude lines</li>
-                    <li class="ch-updated">Allow Composer task options to be overwritten at environment level</li>
-                    <li class="ch-added">Add new method <code>Runtime::getMergedOption</code> to merge ConfigOption and EnvOption</li>
-                </ul>
-
-                <h5>v3.0.1</h5>
-                <ul class="changelog">
-                    <li class="ch-fixed">Fix escape issue when commands are sent through SSH</li>
-                </ul>
-
-                <h5>v3.0.0</h5>
-                <ul class="changelog">
-                    <li class="ch-added">Added all this awesome code</li>
-                    <li class="ch-removed">Not compatible with v1</li>
+                    <li class="ch-added">Refactored for Symfony 4 and PHP 7.1</li>
+                    <li class="ch-added">Symfony Pool Clear task added</li>
+                    <li class="ch-added">Symfony Pool Prune task added</li>
+                    <li class="ch-removed">Symfony Assetic task removed</li>
                 </ul>
 
                 <br />
 
-                <div class="callout callout-warning" role="alert">
-                    <h4>Where are the old Docs?</h4>
-                    <p>Version 1 of Magallanes has long reached it's end of life cycle, still you can find it's (in)documentation <a href="http://v1.magephp.com" target="_blank">here</a>.</p>
+                <div class="callout callout-info" role="alert">
+                    <h4>What about Nostromo docs?</h4>
+                    <p>The documentation of the Nostromo series (v3) of Magallanes is still available in <a href="http://v3.magephp.com" target="_blank">http://v3.magephp.com</a></p>
                 </div>
             </section>
 
