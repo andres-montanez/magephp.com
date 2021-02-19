@@ -184,7 +184,7 @@
                 <p>Installing Magallanes is quite simple, just add the dependency to your Composer configuration, update and you are done!</p>
 
                 <pre class="line-numbers">
-<code class="language-json">"require": {
+<code class="language-json">"require-dev": {
     "andres-montanez/magallanes": "^4.0"
 }</code></pre>
 
@@ -415,11 +415,13 @@
         production:
             ssh:
                 port: 22
-                flags: -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no</code></pre>
+                flags: -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+                timeout: 60</code></pre>
 
                 <p>You can use the flags option to tweak your SSH connection as best fits your needs.
                     The best way to make your connection is by using SSH Keys across your servers. These flags are also inherited by the Rsync and Tar tasks.
                 </p>
+                <p>The <kbd>timeout</kbd> options is the amount of time in seconds for the underlying ssh process to run. The default value is <code>300</code> seconds.</p>
 
                 <div class="callout callout-info" role="alert">
                     <h4>Pro Tip: Port in Host</h4>
@@ -1500,6 +1502,17 @@ class PurgeMemcachedTask extends AbstractTask {
                 <h2 id="changelog">Changelog</h2>
 
                 <h4>Discovery One - v4 Series</h4>
+
+                <h5>v4.1.0</h5>
+                <ul class="changelog">
+                    <li class="ch-updated">PHP 8 and Symfony 5 compatibility [PR#448]</li>
+                    <li class="ch-added">Timeout option for SSH [PR#436]</li>
+                    <li class="ch-added">Improve compatibility with Windows [PR#434] [PR#429]</li>
+                    <li class="ch-added">Improve config load [PR#422]</li>
+                    <li class="ch-fixed">Bug fixes [PR#448] [PR#424]</li>
+                    <li class="ch-merged">Readme updates [PR#438]</li>
+                </ul>
+
 
                 <h5>v4.0.0</h5>
                 <ul class="changelog">
