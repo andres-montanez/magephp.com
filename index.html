@@ -316,6 +316,15 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td><code>copyDirectory</code></td>
+                                <td>
+                                    <p>This option is used for Tar, if set to <kbd>true</kbd> the content of <code>from</code> will be copied.</p>
+                                    <p>However, if set to <kbd>false</kbd> the directory itself will be copied.</p>
+                                    <p>The default value is <kbd>false</kbd> to keep it backward compatible. Experiment with it to better fit your needs.</p>
+                                    <p>This only affects the <kbd>tar</kbd> command execution.</p>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td><code>host_path</code></td>
                                 <td>
                                     <p>It's the path on the remote hosts to where the code is going to be deployed. This parameter is shared with all hosts.</p>
@@ -1502,6 +1511,14 @@ class PurgeMemcachedTask extends AbstractTask {
                 <h2 id="changelog">Changelog</h2>
 
                 <h4>Discovery One - v4 Series</h4>
+
+                <h5>v4.1.1</h5>
+                <ul class="changelog">
+                    <li class="ch-added">Add <kbd>copyDirectory</kbd> option</li>
+                    <li class="ch-fixed">Bug fixes</li>
+                    <li class="ch-updated">Improve testing and coverage</li>
+                </ul>
+
 
                 <h5>v4.1.0</h5>
                 <ul class="changelog">
