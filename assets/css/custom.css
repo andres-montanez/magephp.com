@@ -103,13 +103,13 @@
 
 /* Custom Magallanes */
 .sidebar-dark {
-  background-color: #202020 !important; 
+  background-color: #202020 !important;
 }
 
 .magallanes-banner {
-  background-image: url('../img/discovery-one.jpg');
+  background-image: url('../img/galactica-min.jpg');
   background-repeat: no-repeat;
-  background-position: center center; 
+  background-position: center center;
   background-attachment: scroll;
 }
 
@@ -119,7 +119,7 @@
 
 .magallanes-banner small {
   text-shadow: 1px 1px 2px #000;
-  color: #aaa;
+  color: #fc0;
 }
 
 .social-links {
