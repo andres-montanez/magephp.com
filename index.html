@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
 
-    <title>Magallanes v4 - Documentation</title>
+    <title>Magallanes v5 - Documentation</title>
 
     <!-- Styles -->
     <link href="assets/css/theDocs.all.min.css" rel="stylesheet">
@@ -85,6 +85,7 @@
                     <li><a href="#taskSymfony">Symfony</a></li>
                     <li><a href="#taskFS">File System</a></li>
                     <li><a href="#taskExec">Execute</a></li>
+                    <li><a href="#taskSleep">Sleep</a></li>
                 </ul>
             </li>
             <li>
@@ -129,9 +130,7 @@
                 <!-- Top navbar -->
                 <div id="navbar" class="navbar-collapse collapse" aria-expanded="true" role="banner">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="https://insight.sensiolabs.com/projects/ed0de53a-a12e-459b-9464-34def5907b56" target="_blank">SensioLabs Insight</a></li>
-                        <li><a href="https://travis-ci.org/andres-montanez/Magallanes" target="_blank">Travis CI</a></li>
-                        <li><a href="https://coveralls.io/github/andres-montanez/Magallanes?branch=discovery-one" target="_blank">Coveralls</a></li>
+                        <li><a href="https://coveralls.io/github/andres-montanez/Magallanes?branch=galactica" target="_blank">Coveralls</a></li>
                         <li><a href="https://github.com/andres-montanez/Magallanes" target="_blank">GitHub</a></li>
                     </ul>
                 </div>
@@ -143,7 +142,7 @@
         <!-- Banner -->
         <div class="magallanes-banner banner auto-size" style="background-color: #202020;;">
             <div class="container-fluid text-white">
-                <h1><strong>Magallanes</strong> <small>Discovery One Edition</small></h1>
+                <h1><strong>Magallanes</strong> <small>Galactica Edition</small></h1>
                 <h5>The PHP Deployment Tool</h5>
             </div>
         </div>
@@ -195,10 +194,10 @@
 
                 <pre class="line-numbers">
 <code class="language-json">"require-dev": {
-    "andres-montanez/magallanes": "^4.0"
+    "andres-montanez/magallanes": "^5.0"
 }</code></pre>
 
-                <p>Also you can execute: <kbd>composer require andres-montanez/magallanes:^4.0</kbd></p>
+                <p>Also you can execute: <kbd>composer require andres-montanez/magallanes:^5.0</kbd></p>
 
                 <p>After installing you can invoke Magallanes with the <kbd>vendor/bin/mage</kbd> executable,
                     or you can configure Composer to link all vendors binaries into a more friendly directory,
@@ -217,7 +216,7 @@
                 <p>The most simple test is to check the installed version</p>
 
                 <p><kbd>bin/mage version</kbd></p>
-                <p><pre><samp>Magallanes v4.0.0 [Discovery One]</samp></pre></p>
+                <p><pre><samp>Magallanes v5.0.0 [Galactica]</samp></pre></p>
 
                 <div class="callout callout-info" role="alert">
                     <h4>Pro Tip: Global Install!</h4>
@@ -381,6 +380,14 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td><code>symlink</code></td>
+                                <td>
+                                    <p>When using Releases, the symbolic link name will be <code>current</code>, but you can change it with this option.
+                                    </p>
+                                    <p>If left undefined <code>current</code> will be used.</p>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td><code>exclude</code></td>
                                 <td>
                                     <p>A list of files or directories to exclude when doing Rsync or when creating the Tar for the deployment.
@@ -462,6 +469,25 @@
                     <p>Be careful if you overwrite these flags, otherwise you may experience problems when connecting to the hosts.</p>
                 </div>
 
+                <p>Some flags options for <kbd>ssh</kbd> are incompatible with <kbd>scp</kbd>, so if you need to split these flags, you can define the option <code>scp_flags</code> to be used with <kbd>scp</kbd> only.</p>
+
+                <pre class="line-numbers">
+                    <code class="language-yaml">magephp:
+                        environments:
+                            production:
+                                ssh:
+                                    port: 22
+                                    flags: -t -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+                                    scp_flags: -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+                                    timeout: 60</code></pre>
+
+                <p>In the example above, the <kbd>ssh</kbd> option <code>-t</code> is defined, but it is incompatible with <kbd>scp</kbd>, so we define the <code>scp_flags</code> without it.</p>
+
+                <div class="callout callout-danger" role="alert">
+                    <h4>Warning</h4>
+                    <p>If you use the <code>scp_flags</code> options, please remember to add the default values <kbd>-q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no</kbd> to avoid issues when copying files.</p>
+                </div>
+
                 <h3 id="tar">Tar</h3>
                 <p>The Tar tasks uses two set of flags, one for creation of the file, and another for it's extraction. By default the creation flags are <code>cfzop</code> and the extraction flags are <code>zfzop</code>, you can overwrite them if you need to in the environment section.</p>
                 <p>Also you can specify the path to the tar binary for creation and extraction, by default the binary used is <kbd>tar</kbd>.</p>
@@ -496,11 +522,13 @@
                 <pre class="line-numbers">
 <code class="language-yaml">magephp:
     log_dir: /path/to/my/logs
+    log_limit: 10
 </code></pre>
 
                 <p>The <code>log_dir</code> option is a directory where all the logs will be generated,
                     at the beginning of the deployment the current log file will be informed. If the directory doesn't exists, an error will be thrown, so make sure the directory for logs is available.
                 </p>
+                <p>The <code>log_limit</code> option is how many log files will be kept. If left undefined it will default to 30 log files.</p>
 
                 <h3 id="configReleases">Releases</h3>
                 <p>When using Releases you have to take into account that Magallanes will create a <code>releases</code> directory
@@ -648,7 +676,7 @@
                 <h3 id="cmdVersion">Version</h3>
                 <p>Quite self explanatory, this command will tell you which version of Magallanes is being used.</p>
                 <p><kbd>bin/mage version</kbd></p>
-                <p><pre><samp>Magallanes v4.0.0 [Discovery One]</samp></pre></p>
+                <p><pre><samp>Magallanes v5.0.0 [Galactica]</samp></pre></p>
 
                 <h3 id="cmdConfig">Config</h3>
                 <p>The Config is useful for debugging, it offers two subcommands: <kbd>dump</kbd> and <kbd>environments</kbd></p>
@@ -742,9 +770,9 @@ Finished Magallanes</samp></pre>
                 <h3 id="cmdDeploy">Deploy</h3>
                 <p>Well, this is the big one! The <kbd>deploy</kbd> command will start the deployment of your code. You just have to provide to which environment you want to deploy to:<p>
                 <p><kbd>bin/mage deploy production</kbd> and that's it! You have done it!!</p>
-                <p>Optionally you can set a branch with <kbd>--branch=test</kbd> which will override your configuration, if you don't have a branch configured it will be set to the one provided.</p>
+                <p>Optionally you can set a branch with <kbd>--branch</kbd> and a branch name, which will override your configuration, if you don't have a branch configured it will be set to the one provided.</p>
                 <p>Here is a complete output based on the sample configuration form above</p>
-                <p><kbd>bin/mage deploy production --branch=test</kbd></p>
+                <p><kbd>bin/mage deploy production --branch test</kbd></p>
                 <p><pre><samp>Starting Magallanes
 
     Environment: production
@@ -823,6 +851,24 @@ Finished Magallanes</samp></pre>
                 </p>
                 <p>A similar process is made for changing branches, but on the <code>Pre Deploy</code> and <code>Post Deploy</code> stages.
                 </p>
+
+                <p>Also, if you want to deploy a specific tag, you can pass the option <kbd>--tag</kbd> and a tag name which will override your configuration and checkout the specified tag.</p>
+                <p>Here is the header output when deploying a tag.</p>
+                <p><kbd>bin/mage deploy production --tag v1.0.3</kbd></p>
+                <p><pre><samp>Starting Magallanes
+
+    Environment: production
+    Release ID: 20170104042540
+    Strategy: Releases
+    Tag: v1.0.3
+
+    ...</samp></pre>
+                </p>
+
+                <div class="callout callout-danger" role="alert">
+                    <h4>Warning</h4>
+                    <p>Take into account that the <kbd>--branch</kbd> and  <kbd>--tag</kbd> options are mutually exclusive.</p>
+                </div>
 
                 <h3 id="cmdReleases">Releases</h3>
                 <p>The Releases command is in charge of managing your deployed releases, it offers two subcommands: <kbd>list</kbd> and <kbd>rollback</kbd></p>
@@ -1043,14 +1089,6 @@ Finished Magallanes</samp></pre>
                                     <p><code>flags</code> default <var>--optimize</var></p>
                                 </td>
                                 <td>Will execute <kbd>composer dump-autoload</kbd> plus the given flags.</td>
-                            </tr>
-                            <tr>
-                                <td><code>composer/self-update</code></td>
-                                <td>
-                                    <p><code>path</code> default <var>composer</var></p>
-                                    <p><code>days</code> default <var>60</var></p>
-                                </td>
-                                <td>Will execute <kbd>composer self-update</kbd> to the latest version. The task will skip if Composer is up-to-date.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1299,8 +1337,42 @@ Finished Magallanes</samp></pre>
                         </tr>
                         </tbody>
                     </table>
+
+                    <p>Variable interpolation is supported at the <code>cmd</code> parameter for the following variables: <code>%environment%</code> and <code>%release%</code>.</p>
                 </div>
 
+
+                <h3 id="taskSleep">Sleep</h3>
+                <p>If you need to hold on the deployment for a few seconds, perhaps to allow some syncing or purging, you can use this task to sleep for some time. But don't be greedy!</p>
+
+                <pre class="line-numbers">
+<code class="language-yaml">magephp:
+    environments:
+        production:
+            post-deploy:
+                - sleep: { seconds: 60 }
+</code></pre>
+                <p>The example above will hold execution for 60 seconds.</p>
+
+                <p>The following are the parameters available for this task.</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th width="100">Parameter</th>
+                            <th width="100">Default</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><code>seconds</code></td>
+                            <td>1</td>
+                            <td>Amount of seconds to sleep.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </section>
 
             <section>
@@ -1516,57 +1588,43 @@ class PurgeMemcachedTask extends AbstractTask {
                     Now if you change your class or move it around you just need to change it in one place.
                 </p>
             </section>
-        
+
             <section>
                 <h2 id="changelog">Changelog</h2>
 
-                <h4>Discovery One - v4 Series</h4>
+                <h4>Galactica - v5 Series</h4>
 
-                <h5>v4.1.1</h5>
+                <h5>v5.0.0</h5>
                 <ul class="changelog">
-                    <li class="ch-added">Add <kbd>copyDirectory</kbd> option</li>
-                    <li class="ch-fixed">Bug fixes</li>
-                    <li class="ch-updated">Improve testing and coverage</li>
-                </ul>
-
-
-                <h5>v4.1.0</h5>
-                <ul class="changelog">
-                    <li class="ch-updated">PHP 8 and Symfony 5 compatibility [PR#448]</li>
-                    <li class="ch-added">Timeout option for SSH [PR#436]</li>
-                    <li class="ch-added">Improve compatibility with Windows [PR#434] [PR#429]</li>
-                    <li class="ch-added">Improve config load [PR#422]</li>
-                    <li class="ch-fixed">Bug fixes [PR#448] [PR#424]</li>
-                    <li class="ch-merged">Readme updates [PR#438]</li>
-                </ul>
-
-
-                <h5>v4.0.0</h5>
-                <ul class="changelog">
-                    <li class="ch-added">Refactored for Symfony 4 and PHP 7.1</li>
-                    <li class="ch-added">Symfony Pool Clear task added</li>
-                    <li class="ch-added">Symfony Pool Prune task added</li>
-                    <li class="ch-removed">Symfony Assetic task removed</li>
+                    <li class="ch-added">v5 series release.</li>
+                    <li class="ch-added">Refactored for Symfony 6 and PHP 8.</li>
+                    <li class="ch-added">Added strong types.</li>
+                    <li class="ch-removed">Removed task <code>composer/self-update</code>.</li>
+                    <li class="ch-updated">Allow <code>exec</code> task to interpolate <code>%environment%</code> and <code>%release%</code> variables.</li>
+                    <li class="ch-added">Added new <code>sleep</code> task to day execution [PR#414].</li>
+                    <li class="ch-added">Added new <code>symlink</code> option to define the name of symbolic link on the Release [PR#425].</li>
+                    <li class="ch-added">Improved Windows compatibility [PR#427].</li>
+                    <li class="ch-added">Added new <code>log_limit</code> option to limit how many logs are kept [Issue#403].</li>
+                    <li class="ch-added">Add new deploy option <kbd>--tag</kbd> to specify deploying a specific tag [Issue#192] [Issue#315].</li>
+                    <li class="ch-added">Added new <code>scp_flags</code> option for the <code>scp</code> command when SSH flags are incompatible with [Issue#439].</li>
                 </ul>
 
                 <br />
 
                 <div class="callout callout-info" role="alert">
-                    <h4>What about Nostromo docs?</h4>
-                    <p>The documentation of the Nostromo series (v3) of Magallanes is still available in <a href="http://v3.magephp.com" target="_blank">http://v3.magephp.com</a></p>
+                    <h4>What about Discovery One docs?</h4>
+                    <p>The documentation of the Discovery One series (v4) of Magallanes is still available in <a href="https://v4.magephp.com" target="_blank">https://v4.magephp.com</a></p>
                 </div>
             </section>
 
             <section>
                 <h2 id="thanks">Thanks</h2>
                 <p>I want to give thanks to all the PHP community, those unsung heroes who continuously push the boundaries of technology.</p>
-                <p>And special thanks to my team mates in <a href="http://www.acilia.es" target="_blank">Acilia Internet</a> for they continuing support, ideas, and challenges that made this project came to be in the first place.</p>
             </section>
 
         </article>
         <!-- END Main content -->
     </main>
-
 
     <!-- Footer -->
     <footer class="site-footer">
@@ -1575,7 +1633,7 @@ class PurgeMemcachedTask extends AbstractTask {
 
             <div class="row">
                 <div class="col-md-12 col-sm-12">
-                    <p>&copy; 2011 - 2017 | Magallanes is an open source tool created and maintained by <a href="http://www.andresmontanez.com" target="_blank">Andrés Montañez</a> (among many other contributors) and completely written in PHP.</p>
+                    <p>&copy; 2011 - 2022 | Magallanes is an open source tool created and maintained by <a href="https://www.andresmontanez.com" target="_blank">Andrés Montañez</a> (among many other contributors) and completely written in PHP.</p>
                 </div>
             </div>
         </div>
